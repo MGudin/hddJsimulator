@@ -1,17 +1,7 @@
 # -*- mode: gitignore; -*-
 ### Project Specific
-public/static/*
-public/uploads/*
-!public/uploads/.keep
 
-### Django ###
-*.log
-*.pot
-*.pyc
-__pycache__/
-local_settings.py
-db.sqlite3
-
+/dist
 ### Emacs ###
 *~
 \#*\#
@@ -117,21 +107,4 @@ TAGS
 agenda_cultural.after
 .tern-*
 .rope*
-
-# Created by https://www.gitignore.io/api/virtualenv
-
-### VirtualEnv ###
-# Virtualenv
-# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-.Python
-[Bb]in
-[Ii]nclude
-[Ll]ib
-[Ll]ib64
-[Ll]ocal
-[Ss]cripts
-pyvenv.cfg
-.venv
-pip-selfcheck.json
-share
 
