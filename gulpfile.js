@@ -1,40 +1,47 @@
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const watch = require('gulp-watch');
+const gulp        = require('gulp');
+const watch       = require('gulp-watch');
+const browserSync = require('browser-sync').create();
+const browserify  = require('browserify');
+const source      = require('vinyl-source-stream');
+const sourcemaps  = require('gulp-sourcemaps');
+const buffer      = require('vinyl-buffer');
+const uglify      = require('gulp-uglify');
+const gutil       = require('gulp-util');
 
-var browserSync = require('browser-sync').create();
+var babelify = require("babelify");
 
-gulp.task('babel', () => {
-    return gulp.src('src/app.js')
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(gulp.dest('dist'));
+babelify.configure({presets: ["es2015"]});
+
+gulp.task('javascript', function () {
+
+  var b = browserify({
+    entries: 'src/app.js',
+    standalone: 'libhdd',
+    debug: true,
+    transform: [babelify]
+  });
+
+  return b.bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    });
-});
 
 gulp.task('default', function () {
-    // Callback mode, useful if any plugin in the pipeline depends on the `end`/`flush` event
-    
-    browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    });
 
-    return watch('src/*.js', function(event){
-        gulp.start('babel');
-        browserSync.reload();
-    });
+  browserSync.init({
+    server: {
+      baseDir: "./"
+    }
+  });
+
+  return watch('src/*.js', function(event){
+    gulp.start('javascript');
+    browserSync.reload();
+  });
 });
-
-
-
-// Static server

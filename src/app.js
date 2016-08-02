@@ -1,4 +1,4 @@
-
+const algorithms = require('./algorithms');
 class Requirement
 {
 
@@ -68,4 +68,10 @@ class Simulation
     this.lots      = lots;
   }
 
+}
+
+
+module.exports = {
+  Simulation,
+  Hdd
 }
