@@ -2,13 +2,14 @@ const gulp        = require('gulp');
 const watch       = require('gulp-watch');
 const browserSync = require('browser-sync').create();
 const browserify  = require('browserify');
+const babelify    = require("babelify");
 const source      = require('vinyl-source-stream');
 const sourcemaps  = require('gulp-sourcemaps');
 const buffer      = require('vinyl-buffer');
 const uglify      = require('gulp-uglify');
 const gutil       = require('gulp-util');
-
-var babelify = require("babelify");
+const tape        = require('gulp-tape');
+const tapColorize = require('tap-colorize');
 
 babelify.configure({presets: ["es2015"]});
 
@@ -31,6 +32,13 @@ gulp.task('javascript', function () {
     .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('test', function() {
+  return gulp.src('test/*.js')
+    .pipe(tape({
+      reporter: tapColorize(),
+      bail: true
+    }));
+});
 
 gulp.task('default', function () {
 
@@ -40,8 +48,12 @@ gulp.task('default', function () {
     }
   });
 
-  return watch('src/*.js', function(event){
+  watch('src/*.js', function(event){
     gulp.start('javascript');
     browserSync.reload();
+  });
+
+  watch('test/*.js', function(event){
+    gulp.start('test');
   });
 });
