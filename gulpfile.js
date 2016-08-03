@@ -1,5 +1,6 @@
 const gulp        = require('gulp');
 const watch       = require('gulp-watch');
+const babel       = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const browserify  = require('browserify');
 const babelify    = require("babelify");
@@ -13,7 +14,7 @@ const tapColorize = require('tap-colorize');
 
 babelify.configure({presets: ["es2015"]});
 
-gulp.task('javascript', function () {
+gulp.task('javascript', () => {
 
   var b = browserify({
     entries: 'src/app.js',
@@ -32,15 +33,7 @@ gulp.task('javascript', function () {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('test', function() {
-  return gulp.src('test/*.js')
-    .pipe(tape({
-      reporter: tapColorize(),
-      bail: true
-    }));
-});
-
-gulp.task('default', function () {
+gulp.task('default', () => {
 
   browserSync.init({
     server: {
@@ -48,12 +41,26 @@ gulp.task('default', function () {
     }
   });
 
-  watch('src/*.js', function(event){
+  watch('src/*.js', () => {
     gulp.start('javascript');
     browserSync.reload();
   });
 
-  watch('test/*.js', function(event){
-    gulp.start('test');
+});
+
+gulp.task('run_tests', () => {
+  return gulp.src('test/*.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(tape({
+      reporter: tapColorize(),
+      bail: true
+    }));
+});
+
+gulp.task('test', () => {
+  watch(['test/*.js', 'src/**/*.js'], () => {
+    gulp.start('run_tests');
   });
 });

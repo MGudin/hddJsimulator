@@ -7,18 +7,18 @@ const algorithms = require(`${root_dir}src/algorithms.js`);
 
 
 
-test('it exports algorithm constants', function (t) {
+test('it exports algorithm constants', (assert) => {
 
   let requiredConstants = [
     'FCFS',
     'SSTF',
   ];
 
-  t.plan(requiredConstants.length);
+  assert.plan(requiredConstants.length);
 
-  for (let constant of requiredConstants) 
+  for (let constant of requiredConstants)
   {
-    t.equal(typeof algorithms[constant], 'function');
+    assert.equal(typeof algorithms[constant], 'function');
   }
 
 });
