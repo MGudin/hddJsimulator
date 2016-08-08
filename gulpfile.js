@@ -1,5 +1,6 @@
 const gulp        = require('gulp');
 const watch       = require('gulp-watch');
+const shell       = require('gulp-shell')
 const babel       = require('gulp-babel');
 const browserSync = require('browser-sync').create();
 const browserify  = require('browserify');
@@ -48,19 +49,10 @@ gulp.task('default', () => {
 
 });
 
-gulp.task('run_tests', () => {
-  return gulp.src('test/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(tape({
-      reporter: tapColorize(),
-      bail: true
-    }));
-});
+gulp.task('run_tests', shell.task([
+  'npm run test'
+]));
 
-gulp.task('test', () => {
-  watch(['test/*.js', 'src/**/*.js'], () => {
-    gulp.start('run_tests');
-  });
+gulp.task('test', ['run_tests'], () => {
+  gulp.watch(['app/**/*.js', 'test/**/*.js'], ['exec-tests']);
 });
