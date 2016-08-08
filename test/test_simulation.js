@@ -25,4 +25,3 @@ test('`Simulation.run` requires algorithm argument', assert => {
     'Cannot run without algorithm'
   );
 })
-

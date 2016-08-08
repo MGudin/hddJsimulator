@@ -81,10 +81,34 @@ class Simulation
 
 }
 
+class Scheduler
+{
+  constructor(
+    method,
+    simulation
+  )
+  {
+    if (typeof method === 'undefined')
+    {
+      throw new Error('method is Required');
+    }
+    if (typeof simulation === 'undefined'){
+      throw new Error('simulation is Required');
+    }
+    this.method = method;
+    this.direction = simulation.direction;
+    this.movements = 0;
+    this.attendedRequirements = new Array();
+    this.position = simulation.position;
+    // this.
+  }
+
+  
+}
+
 
 export {
   Simulation,
   Hdd,
-  algorithms
+  Scheduler,
 }
-

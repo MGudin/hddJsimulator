@@ -6,6 +6,11 @@ class BaseAlgorithm
 
 class FCFS extends BaseAlgorithm
 {
+
+  className()
+  {
+    return 'FCFS';
+  }
 }
 
 class SSTF extends BaseAlgorithm
