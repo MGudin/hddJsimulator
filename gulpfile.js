@@ -11,7 +11,7 @@ const buffer      = require('vinyl-buffer');
 const uglify      = require('gulp-uglify');
 const gutil       = require('gulp-util');
 const tape        = require('gulp-tape');
-const tapColorize = require('tap-colorize');
+const exec        = require('child_process').exec;
 
 babelify.configure({presets: ["es2015"]});
 
@@ -49,10 +49,17 @@ gulp.task('default', () => {
 
 });
 
-gulp.task('run_tests', shell.task([
-  'npm run test'
-]));
+
+gulp.task('run_tests', () => {
+  exec('npm run test', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+  });
+})
 
 gulp.task('test', ['run_tests'], () => {
-  gulp.watch(['app/**/*.js', 'test/**/*.js'], ['exec-tests']);
+  gulp.watch(
+    ['src/**/*.js', 'test/**/*.js'],
+    ['run_tests']
+  );
 });
