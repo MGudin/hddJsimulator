@@ -24,7 +24,7 @@ test('Scheduler constructor requires method and simulation', assert => {
 });
 
 test('scheduler instance variables are beeing set', assert => {
-  assert.plan(5);
+  assert.plan(9);
   
   let simulation = new sim_lib.Simulation();
   let method = new alg_lib.FCFS();
@@ -36,6 +36,17 @@ test('scheduler instance variables are beeing set', assert => {
   assert.equals(typeof scheduler.movements, 'number');
   assert.equals(typeof scheduler.attendedRequirements, 'object');
   assert.equals(typeof scheduler.position, 'number');
-  
-  
+
+  // check that instance variables has correct values according to simulation
+  assert.true(scheduler.direction);
+  assert.equals(scheduler.movements, 0);
+  assert.equals(scheduler.position, 0);
+  assert.equals(scheduler.method.className(), 'FCFS');
 });
+
+// test('scheduler instance variables values are beeing set according to simulation',
+//      assert => {
+//        asser.plan(1);
+       
+//      });
+

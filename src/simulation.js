@@ -100,9 +100,8 @@ class Scheduler
     this.movements = 0;
     this.attendedRequirements = new Array();
     this.position = simulation.position;
-    // this.
+    
   }
-
   
 }
 

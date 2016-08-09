@@ -6,7 +6,7 @@ class BaseAlgorithm
 
 class FCFS extends BaseAlgorithm
 {
-
+  
   className()
   {
     return 'FCFS';
@@ -15,6 +15,10 @@ class FCFS extends BaseAlgorithm
 
 class SSTF extends BaseAlgorithm
 {
+  className()
+  {
+    return 'SSTF'
+  }
 }
 
 module.exports = {
