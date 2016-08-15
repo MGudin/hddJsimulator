@@ -1,27 +1,41 @@
 'use strict';
 
-class BaseAlgorithm
+class FCFS
 {
-}
+  static nextRequirement(context)
+  {
+    return {};
+  }
 
-class FCFS extends BaseAlgorithm
-{
-  
   className()
   {
     return 'FCFS';
   }
 }
 
-class SSTF extends BaseAlgorithm
+class SSTF
 {
+  static nextRequirement(context)
+  {
+    return {};
+  }
+
   className()
   {
     return 'SSTF'
   }
 }
 
+class LOOK extends FCFS {}
+class CLOOK extends FCFS {}
+class SCAN extends FCFS {}
+class CSCAN extends FCFS {}
+
 module.exports = {
   FCFS,
-  SSTF
+  SSTF,
+  LOOK,
+  CLOOK,
+  SCAN,
+  CSCAN
 }

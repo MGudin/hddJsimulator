@@ -71,40 +71,50 @@ class Simulation
     this.lots      = lots;
   }
 
-  run(algorithm) {
-
-    if (typeof algorithm === 'undefined') 
-    {
-      throw new Error("Cannot run without algorithm");
-    }
-  }
-
 }
 
 class Scheduler
 {
   constructor(
     method,
-    simulation
+    context
   )
   {
     if (typeof method === 'undefined')
     {
-      throw new Error('method is Required');
+      throw new Error('A Method is Required');
     }
-    if (typeof simulation === 'undefined'){
-      throw new Error('simulation is Required');
+    if (typeof context === 'undefined')
+    {
+      throw new Error('A Context is Required');
     }
-    this.method = method;
-    this.direction = simulation.direction;
-    this.movements = 0;
-    this.attendedRequirements = new Array();
-    this.position = simulation.position;
-    
-  }
-  
-}
 
+    this.method = method;
+    this.context = context;
+
+  }
+
+  * runInSteps(context)
+  {
+
+    if (!typeof context === 'undefined')
+    {
+      this.updateContext(context);
+    }
+
+    while (this.hasUnattendedReqs())
+    {
+      next = this.method.nextStep(this.context);
+      this.updateContext(next);
+      yield this.context;
+    }
+  }
+
+  run() {
+    return [...this.runInSteps()];
+  }
+
+}
 
 export {
   Simulation,
