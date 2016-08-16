@@ -2,7 +2,7 @@
 
 class FCFS
 {
-  static nextRequirement(context)
+  static next(context)
   {
     return {};
   }
@@ -15,7 +15,7 @@ class FCFS
 
 class SSTF
 {
-  static nextRequirement(context)
+  static next(context)
   {
     return {};
   }

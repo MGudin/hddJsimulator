@@ -24,7 +24,7 @@ test('it exports algorithm constants', assert => {
 
 });
 
-test('All algorithms have same interface for `nextRequirement`', assert => {
+test('All algorithms have same interface for `next`', assert => {
 
   let context = {
     pageFaults: [1, 56],
@@ -37,10 +37,10 @@ test('All algorithms have same interface for `nextRequirement`', assert => {
   {
     let Method = algorithms[constant];
 
-    // ensure all algorithms understand `nextRequirement`
-    assert.equal(typeof Method.nextRequirement, 'function');
+    // ensure all algorithms understand `next`
+    assert.equal(typeof Method.next, 'function');
     // ensure all algorithms return an object
-    assert.equal(typeof Method.nextRequirement(context), 'object');
+    assert.equal(typeof Method.next(context), 'object');
   }
 
 });
