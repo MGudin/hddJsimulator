@@ -41,4 +41,6 @@ class Scheduler
 
 }
 
-export default Scheduler;
+export {
+  Scheduler
+}
