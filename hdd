@@ -1,0 +1,12 @@
+# -*- mode: sh -*-
+# vi: set ft=sh :
+
+#= AUTHOR: farfanoide (https://github.com/farfanoide)
+#= DESCRIPTION: Basic tmux session
+
+# Create a new session and name the first window 'General'
+# This is required as it actually creates the new session
+new_session -n 'General'
+
+# Send some command down to our new window called 'General'
+send_line 'General' '${EDITOR:-vi}' 
