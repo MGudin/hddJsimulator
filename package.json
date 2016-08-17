@@ -12,6 +12,7 @@
     "browserify": "^13.1.0",
     "faucet": "0.0.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tape": "0.0.9",
