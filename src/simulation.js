@@ -1,7 +1,5 @@
 'use strict';
 
-import {algorithms} from './algorithms';
-
 class Requirement
 {
 
@@ -116,7 +114,7 @@ class Scheduler
 
 }
 
-export {
+module.exports = {
   Simulation,
   Hdd,
   Scheduler,

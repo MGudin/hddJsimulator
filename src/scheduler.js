@@ -41,6 +41,6 @@ class Scheduler
 
 }
 
-export {
+module.exports = {
   Scheduler
 }

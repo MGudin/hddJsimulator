@@ -1,8 +1,8 @@
 'use strict';
-
+const root_dir = '../'
+const test     = require('tape');
 require('babel-polyfill');
-const root_dir  = '../'
-const test      = require('tape');
+
 const sim_lib   = require(`${root_dir}src/simulation.js`);
 const alg_lib   = require(`${root_dir}src/algorithms.js`);
 const sched_lib = require(`${root_dir}src/scheduler.js`);
