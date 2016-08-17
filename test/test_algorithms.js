@@ -1,8 +1,8 @@
 'use strict';
-import {test} from 'tape';
 
-
-import * as algorithms from '../src/algorithms.js';
+const root_dir = '../'
+const test = require('tape');
+const algorithms = require(`${root_dir}src/algorithms.js`);
 
 const requiredConstants = [
   'FCFS',
@@ -15,12 +15,13 @@ const requiredConstants = [
 
 test('it exports algorithm constants', assert => {
 
+  assert.plan(requiredConstants.length);
+
   for (let constant of requiredConstants)
   {
     assert.equal(typeof algorithms[constant], 'function');
   }
 
-  assert.end();
 });
 
 test('All algorithms have same interface for `next`', assert => {
@@ -29,6 +30,8 @@ test('All algorithms have same interface for `next`', assert => {
     pageFaults: [1, 56],
     unattended: [4, 67]
   };
+
+  assert.plan(requiredConstants.length * 2);
 
   for (let constant of requiredConstants)
   {
@@ -40,5 +43,4 @@ test('All algorithms have same interface for `next`', assert => {
     assert.equal(typeof Method.next(context), 'object');
   }
 
-    assert.end();
 });

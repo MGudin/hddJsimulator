@@ -1,10 +1,11 @@
 'use strict';
-require('babel-polyfill');
-import {test} from 'tape';
 
-import * as sim_lib from '../src/simulation.js';
-import * as alg_lib from '../src/algorithms.js';
-import * as sched_lib from '../src/scheduler.js';
+require('babel-polyfill');
+const root_dir  = '../'
+const test      = require('tape');
+const sim_lib   = require(`${root_dir}src/simulation.js`);
+const alg_lib   = require(`${root_dir}src/algorithms.js`);
+const sched_lib = require(`${root_dir}src/scheduler.js`);
 
 
 test('Scheduler constructor requires method and simulation', assert => {
