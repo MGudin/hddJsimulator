@@ -30,24 +30,26 @@ class Lot
 
   add(req)
   {
-    this.requirements.push(req);
+    this.requirements = [].concat.apply(this.requirements,[req]);
+  }
+
+  size()
+  {
+    return this.requirements.length;
   }
 
 }
 
 class Hdd
 {
-  constructor(
-    name      = 'Sample Hdd',
-    tracks    = 512,
-    rpm       = 5400,
-    seek_time = 500
-  )
+  constructor(params = {
+    name:      'Sample Hdd',
+    tracks:    512,
+    rpm:       5400,
+    seek_time: 500
+  })
   {
-    this.name      = name;
-    this.tracks    = tracks;
-    this.rpm       = rpm;
-    this.seek_time = seek_time;
+    Object.assign(this, params)
   }
 }
 
@@ -55,18 +57,14 @@ class Simulation
 {
 
   constructor(params = {
-    name: 'Sample Simulation',
+    name:      'Sample Simulation',
     direction: true,
-    position: 0,
-    hdd: new Hdd(),
-    lots: []
+    position:  0,
+    hdd:       new Hdd(),
+    lots:      []
   })
   {
-    this.name      = params.name;
-    this.direction = params.direction;
-    this.position  = params.position;
-    this.hdd       = params.hdd;
-    this.lots      = params.lots;
+    Object.assign(this, params)
   }
 
 }
