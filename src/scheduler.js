@@ -1,9 +1,6 @@
 class Scheduler
 {
-  constructor(
-    method,
-    context
-  )
+  constructor(method, context)
   {
     if (typeof method === 'undefined')
     {
@@ -36,7 +33,14 @@ class Scheduler
   }
 
   run() {
-    return [...this.steps()];
+    let state = {};
+
+    // for (step of this.steps())
+    // {
+    //   state = step;
+    // }
+
+    return state;
   }
 
 }
