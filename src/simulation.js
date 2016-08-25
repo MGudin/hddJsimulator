@@ -42,13 +42,17 @@ class Lot
 
 class Hdd
 {
-  constructor(params = {
+  constructor(params)
+  {
+    // Set default hdd values
+    var defaultValues = {
     name:      'Sample Hdd',
     tracks:    512,
     rpm:       5400,
     seek_time: 500
-  })
-  {
+    }
+    Object.assign(this, defaultValues)
+    // Updates default values with params
     Object.assign(this, params)
   }
 }
@@ -56,15 +60,19 @@ class Hdd
 class Simulation
 {
 
-  constructor(params = {
-    name:      'Sample Simulation',
-    direction: true,
-    position:  0,
-    hdd:       new Hdd(),
-    lots:      []
-  })
+  constructor(params)
   {
-    Object.assign(this, params)
+    // Set default simulation values
+    var defaultValues = {
+      name:      'Sample Simulation',
+      direction: true,
+      position:  0,
+      hdd:       new Hdd(),
+      lots:      []
+    };
+    Object.assign(this, defaultValues);
+    // Updates default values with params
+    Object.assign(this, params);
   }
 
 }

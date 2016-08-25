@@ -33,3 +33,19 @@ test('it gives precedence to args passed on initialization', assert => {
 
   assert.end();
 });
+
+test('Initializes with default params and updates only args passed to contructor', assert => {
+  
+  let params = {
+    direction: false,
+  };
+
+  let simulation = new sim_lib.Simulation(params);
+
+  assert.equals(simulation.name, 'Sample Simulation');
+  assert.equals(simulation.direction, false);
+  assert.equals(simulation.position, 0);
+  assert.equals(simulation.lots.length, 0);
+  
+  assert.end();
+});
