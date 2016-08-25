@@ -54,62 +54,19 @@ class Hdd
 class Simulation
 {
 
-  constructor(
-    name      = 'Sample Simulation',
-    direction = true,
-    position  = 0,
-    hdd       = new Hdd(),
-    lots      = []
-  )
+  constructor(params = {
+    name: 'Sample Simulation',
+    direction: true,
+    position: 0,
+    hdd: new Hdd(),
+    lots: []
+  })
   {
-    this.name      = name;
-    this.direction = direction;
-    this.position  = position;
-    this.hdd       = hdd;
-    this.lots      = lots;
-  }
-
-}
-
-class Scheduler
-{
-  constructor(
-    method,
-    context
-  )
-  {
-    if (typeof method === 'undefined')
-    {
-      throw new Error('A Method is Required');
-    }
-    if (typeof context === 'undefined')
-    {
-      throw new Error('A Context is Required');
-    }
-
-    this.method = method;
-    this.context = context;
-
-  }
-
-  * runInSteps(context)
-  {
-
-    if (!typeof context === 'undefined')
-    {
-      this.updateContext(context);
-    }
-
-    while (this.hasUnattendedReqs())
-    {
-      next = this.method.nextStep(this.context);
-      this.updateContext(next);
-      yield this.context;
-    }
-  }
-
-  run() {
-    return [...this.runInSteps()];
+    this.name      = params.name;
+    this.direction = params.direction;
+    this.position  = params.position;
+    this.hdd       = params.hdd;
+    this.lots      = params.lots;
   }
 
 }
@@ -117,5 +74,7 @@ class Scheduler
 module.exports = {
   Simulation,
   Hdd,
-  Scheduler,
+  Lot,
+  Requirement,
+  PageFault,
 }
