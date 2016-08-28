@@ -23,7 +23,7 @@ class Scheduler
     this.context.movements = 0;
     this.context.attended = [];
     this.context.unattended = {
-      page_faults: [],
+      pageFaults: [],
       requirements: []
     };
     this.context.lots = context.lots;

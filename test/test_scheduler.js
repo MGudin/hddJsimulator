@@ -42,7 +42,7 @@ test('Scheduler instance variables are beeing set', assert => {
   assert.equals(scheduler.context.position, 0);
   assert.equals(scheduler.context.movements, 0);
   assert.equals(scheduler.context.attended.length, 0);
-  assert.equals(scheduler.context.unattended.page_faults.length, 0);
+  assert.equals(scheduler.context.unattended.pageFaults.length, 0);
   assert.equals(scheduler.context.unattended.requirements.length, 0);
   assert.equals(scheduler.context.lots.length, 0);
   assert.equals(scheduler.context.maxTracks, 512);
