@@ -2,9 +2,6 @@
 
 const root_dir = '../'
 const test = require('tape');
-const algorithms = require(`${root_dir}src/algorithms.js`);
+const FCFS = require(`${root_dir}src/algorithms.js`).FCFS;
+const PageFault = require(`${root_dir}src/simulation.js`).PageFault;
 
-
-// test('', assert => {
-//   FCFS.nextRequirement(context).isPf(), true|false 
-// });

@@ -1,10 +1,15 @@
 'use strict';
 
+const PageFault = require(`./simulation.js`).PageFault;
+
+
 class FCFS
 {
   static next(context)
   {
-    return {};
+    return {
+      requirement : new PageFault(300)
+    }
   }
 
   className()
@@ -13,12 +18,8 @@ class FCFS
   }
 }
 
-class SSTF
+class SSTF extends FCFS
 {
-  static next(context)
-  {
-    return {};
-  }
 
   className()
   {
