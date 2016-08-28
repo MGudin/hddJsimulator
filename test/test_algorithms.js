@@ -29,6 +29,8 @@ const context = {
 for (let constant of requiredConstants)
 {
 
+  let Algorithm = algorithms[constant];
+
   test(`${constant} exports algorithm constants`, assert => {
 
 
@@ -45,7 +47,7 @@ for (let constant of requiredConstants)
     assert.equal(typeof Method.next, 'function');
     // ensure all algorithms return an object
     assert.equal(typeof Method.next(context), 'object');
-    
+
     assert.end()
   });
 
@@ -54,6 +56,10 @@ for (let constant of requiredConstants)
 
     let next = algorithms[constant].next(context)
     assert.equals(next.requirement.isPageFault, true);
+
+    let next_context = {unattended: { pageFaults: [new PageFault(400)], requirements: [] }};
+    next = algorithms[constant].next(next_context).requirement;
+    assert.equals(next.equals(new PageFault(400)), true);
 
     assert.end();
   });
@@ -66,4 +72,17 @@ for (let constant of requiredConstants)
 
     assert.end();
   });
-}
+
+  test(`${constant}#next returns results object with proper interface`, assert => {
+    let result = Algorithm.next(context);
+
+    assert.equals(typeof result.direction, 'boolean');
+    assert.equals(typeof result.position, 'number');
+    assert.equals(typeof result.requirement, 'object');
+    assert.equals(typeof result.movements, 'number');
+    // TODO: check if classes can return custom typeof
+
+    assert.end();
+  });
+
+} // end for

@@ -1,17 +1,35 @@
 'use strict';
 
 const PageFault = require(`./simulation.js`).PageFault;
+const Requirement = require(`./simulation.js`).Requirement;
 
-
-class FCFS
+class BaseAlgorithm
 {
+
   static next(context)
   {
-    return {
-      requirement : new PageFault(300)
+    let req;
+
+    if (context.unattended.pageFaults.length > 0)
+    {
+      req = context.unattended.pageFaults[0];
+    } else {
+      req = context.unattended.requirements[0];
     }
+
+    return {
+      direction: true,
+      requirement: req,
+      movements: 0,
+      position: req.value
+    }
+
   }
 
+}
+
+class FCFS extends BaseAlgorithm
+{
   className()
   {
     return 'FCFS';
