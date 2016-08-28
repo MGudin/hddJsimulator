@@ -3,12 +3,16 @@
 class Requirement
 {
 
-  constructor(value, is_pf = false)
+  constructor(value, isPageFault = false)
   {
     this.value = value;
-    this.is_pf = is_pf;
+    this.isPageFault = isPageFault;
   }
 
+  equals(other){
+    return this.value === other.value &&
+      this.isPageFault === other.isPageFault
+  }
 }
 
 class PageFault extends Requirement
