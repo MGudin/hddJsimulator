@@ -23,9 +23,10 @@ class PageFault extends Requirement
 class Lot
 {
 
-  constructor(reqs = [])
+  constructor(reqs = [], entry = 0)
   {
     this.requirements = reqs;
+    this.entry = entry;
   }
 
   add(req)

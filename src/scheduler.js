@@ -1,5 +1,6 @@
 class Scheduler
 {
+
   constructor(method, context)
   {
     if (typeof method === 'undefined')
@@ -11,38 +12,36 @@ class Scheduler
       throw new Error('A Context is Required');
     }
 
-    this.method = method;
-    this.context = context;
+    this.method  = method;
+
+    this.initial_context = context;
+
+    this.context = {};
+    this.context.maxTracks = context.hdd.tracks;
+    this.context.direction = context.direction;
+    this.context.position = context.position;
+    this.context.movements = 0;
+    this.context.attended = [];
+    this.context.unattended = {
+      page_faults: [],
+      requirements: []
+    };
+    this.context.lots = context.lots;
 
   }
 
-  * steps(context)
+  * steps()
   {
-
-    if (!typeof context === 'undefined')
-    {
-      this.updateContext(context);
-    }
-
     while (this.hasUnattendedReqs())
     {
-      next = this.method.next(this.context);
-      this.updateContext(next);
-      yield this.context;
+      yield step
     }
   }
-
   run() {
     let state = {};
 
-    // for (step of this.steps())
-    // {
-    //   state = step;
-    // }
-
     return state;
   }
-
 }
 
 module.exports = {
