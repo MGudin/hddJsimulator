@@ -34,14 +34,14 @@ for (let constant of requiredConstants)
   test(`${constant} exports algorithm constants`, assert => {
 
 
-    assert.equal(typeof algorithms[constant], 'function');
+    assert.equal(typeof Algorithm, 'function');
 
     assert.end();
   });
 
   test(`${constant} have same interface for next`, assert => {
 
-    let Method = algorithms[constant];
+    let Method = Algorithm;
 
     // ensure all algorithms understand `next`
     assert.equal(typeof Method.next, 'function');
@@ -54,11 +54,11 @@ for (let constant of requiredConstants)
 
   test(`${constant} algorithm returns pf if present`, assert => {
 
-    let next = algorithms[constant].next(context)
+    let next = Algorithm.next(context)
     assert.equals(next.requirement.isPageFault, true);
 
     let next_context = {unattended: { pageFaults: [new PageFault(400)], requirements: [] }};
-    next = algorithms[constant].next(next_context).requirement;
+    next = Algorithm.next(next_context).requirement;
     assert.equals(next.equals(new PageFault(400)), true);
 
     assert.end();
@@ -67,7 +67,7 @@ for (let constant of requiredConstants)
 
   test(`${constant} algorithm returns the first page fault available`, assert => {
 
-    let next = algorithms[constant].next(context)
+    let next = Algorithm.next(context)
     assert.equals(next.requirement.equals(new PageFault(300)), true)
 
     assert.end();
@@ -76,10 +76,10 @@ for (let constant of requiredConstants)
   test(`${constant}#next returns results object with proper interface`, assert => {
     let result = Algorithm.next(context);
 
-    assert.equals(typeof result.direction, 'boolean');
-    assert.equals(typeof result.position, 'number');
+    assert.equals(typeof result.direction,   'boolean');
+    assert.equals(typeof result.position,    'number');
     assert.equals(typeof result.requirement, 'object');
-    assert.equals(typeof result.movements, 'number');
+    assert.equals(typeof result.movements,   'number');
     // TODO: check if classes can return custom typeof
 
     assert.end();
