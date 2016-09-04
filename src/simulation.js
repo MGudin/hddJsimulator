@@ -13,6 +13,11 @@ class Requirement
     return this.value === other.value &&
       this.isPageFault === other.isPageFault
   }
+  
+  valueOf()
+  {
+    return this.value
+  }
 }
 
 class PageFault extends Requirement
