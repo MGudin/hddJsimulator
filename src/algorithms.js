@@ -20,7 +20,7 @@ class BaseAlgorithm
     let movements = this.countMovements(requirement, context);
 
     let direction = this.getFinalDirection(requirement, context);
-    
+
     return {
       direction,
       requirement,
