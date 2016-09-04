@@ -8,22 +8,39 @@ class BaseAlgorithm
 
   static next(context)
   {
-    let req;
+    let requirement;
 
     if (context.unattended.pageFaults.length > 0)
     {
-      req = context.unattended.pageFaults[0];
+      requirement = context.unattended.pageFaults[0];
     } else {
-      req = context.unattended.requirements[0];
+      requirement = context.unattended.requirements[0];
     }
 
+    let movements = this.countMovements(requirement, context);
+
+    let direction = this.getFinalDirection(requirement, context);
+    
     return {
-      direction: true,
-      requirement: req,
-      movements: 0,
-      position: req.value
+      direction,
+      requirement,
+      movements,
+      position: requirement.value
     }
 
+  }
+
+  static countMovements(requirement, context)
+  {
+    let currentPosition = context.position;
+    let attendedRequirement = requirement;
+
+    return Math.abs( currentPosition - attendedRequirement);
+  }
+
+  static getFinalDirection(requirement, context)
+  {
+    return requirement > context.position;
   }
 
 }

@@ -15,7 +15,9 @@ const context = {
       new Requirement(300),
       new Requirement(400)
     ],
-  }
+  },
+  direction: true,
+  position: 250
 }
 
 test('FCFS returns first requirement when no PFs present', assert => {
@@ -29,3 +31,23 @@ test('FCFS returns first requirement when no PFs present', assert => {
   assert.end();
 });
 
+
+test('FCFS test returned state is correct(with page faults)', assert => {
+  
+  context.unattended.pageFaults = [ new PageFault(350) ];
+  let step = FCFS.next(context)
+
+  assert.equals(step.requirement.equals(new PageFault(350)), true)
+  assert.equals(step.direction, true)
+  assert.equals(step.movements, 100)
+
+  context.position = 400;
+  step = FCFS.next(context)
+
+  assert.equals(step.requirement.equals(new PageFault(350)), true)
+  assert.equals(step.direction, false)
+  assert.equals(step.movements, 50)
+  
+  assert.end();
+});
+test
