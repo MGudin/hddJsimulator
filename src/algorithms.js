@@ -67,11 +67,11 @@ class SSTF extends FCFS
     let position = context.position;
     let requirement;
 
-    let min = (pre, current) => {
-      return (Math.abs(pre - position) < Math.abs(current - position)) ? pre : current
+    let closestRequirement = (previous, current) => {
+      return (Math.abs(previous - position) < Math.abs(current - position)) ? previous : current
     };
 
-    return context.unattended.requirements.reduce(min)
+    return context.unattended.requirements.reduce(closestRequirement)
   }
 
   className()
