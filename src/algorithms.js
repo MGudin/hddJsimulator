@@ -14,7 +14,7 @@ class BaseAlgorithm
     {
       requirement = context.unattended.pageFaults[0];
     } else {
-      requirement = context.unattended.requirements[0];
+      requirement = this.getNextRequirement(context);
     }
 
     let movements = this.countMovements(requirement, context);
@@ -28,6 +28,11 @@ class BaseAlgorithm
       position: requirement.value
     }
 
+  }
+
+  static getNextRequirement(context)
+  {
+    return context.unattended.requirements[0];
   }
 
   static countMovements(requirement, context)
@@ -55,6 +60,19 @@ class FCFS extends BaseAlgorithm
 
 class SSTF extends FCFS
 {
+
+
+  static getNextRequirement(context)
+  {
+    let position = context.position;
+    let requirement;
+
+    let min = (pre, current) => {
+      return (Math.abs(pre - position) < Math.abs(current - position)) ? pre : current
+    };
+
+    return context.unattended.requirements.reduce(min)
+  }
 
   className()
   {
