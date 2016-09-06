@@ -13,7 +13,7 @@ class Requirement
     return this.value === other.value &&
       this.isPageFault === other.isPageFault
   }
-  
+
   valueOf()
   {
     return this.value
@@ -40,12 +40,51 @@ class Lot
 
   add(req)
   {
-    this.requirements = [].concat.apply(this.requirements,[req]);
+    this.requirements = [].concat.apply(this.requirements, [req]);
   }
 
   size()
   {
     return this.requirements.length;
+  }
+
+  first()
+  {
+    return this.requirements[0];
+  }
+
+  last()
+  {
+    return this.requirements[this.size() - 1];
+  }
+
+  remove(requirement)
+  {
+    for (let i = 0, length = this.size(); i < length; i++)
+    {
+      if (requirement.equals(this.requirements[i]))
+      {
+        this.requirements.splice(i, 1); break;
+      }
+    }
+  }
+
+  at(index)
+  {
+    return this.requirements[index];
+  }
+
+  equals(other)
+  {
+
+    if (! this.size() === other.size()) { return false };
+
+    for (let i = 0, length = this.size(); i < length; i++)
+    {
+      if (! this.at(i).equals(other.at(i))) { return false };
+    }
+
+    return true;
   }
 
 }
