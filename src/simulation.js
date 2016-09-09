@@ -9,7 +9,8 @@ class Requirement
     this.isPageFault = isPageFault;
   }
 
-  equals(other){
+  equals(other)
+  {
     return this.value === other.value &&
       this.isPageFault === other.isPageFault
   }
@@ -50,12 +51,12 @@ class Lot
 
   first()
   {
-    return this.requirements[0];
+    return this.requirements.shift();
   }
 
   last()
   {
-    return this.requirements[this.size() - 1];
+    return this.requirements.pop();
   }
 
   remove(requirement)
