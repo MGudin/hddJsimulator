@@ -80,3 +80,19 @@ test('Scheduler `run` returns a results object', assert => {
 
   assert.end();
 });
+
+// test('Scheduler updates context', assert => {
+//   let scheduler = SimpleScheduler();
+
+//   scheduler.updateContext(
+//     { requirement: new Requirement(300),
+//       direction : true,
+//       movements : 300,
+//       position : 300,
+//     }
+//   );
+
+//   assert.equals(sche.context.attended.last, new Requ300)
+
+//   assert.end();
+// });

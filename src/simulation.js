@@ -33,13 +33,12 @@ class PageFault extends Requirement
 class Lot
 {
 
-  constructor(reqs = [], entry = 0)
+  constructor(reqs = [])
   {
     this.requirements = reqs;
-    this.entry = entry;
   }
 
-  add(req)
+  append(req)
   {
     this.requirements = [].concat.apply(this.requirements, [req]);
   }
@@ -65,9 +64,11 @@ class Lot
     {
       if (requirement.equals(this.requirements[i]))
       {
-        this.requirements.splice(i, 1); break;
+        this.requirements.splice(i, 1);
+        return true;
       }
     }
+    return false;
   }
 
   at(index)
@@ -78,7 +79,7 @@ class Lot
   equals(other)
   {
 
-    if (! this.size() === other.size()) { return false };
+    if (this.size() !== other.size()) { return false };
 
     for (let i = 0, length = this.size(); i < length; i++)
     {

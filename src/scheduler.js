@@ -1,3 +1,6 @@
+const root_dir = '../';
+const Lot = require(`${root_dir}src/simulation.js`).Lot;
+
 class Scheduler
 {
 
@@ -21,7 +24,7 @@ class Scheduler
     this.context.direction = context.direction;
     this.context.position = context.position;
     this.context.movements = 0;
-    this.context.attended = [];
+    this.context.attended =  [];// new Lot();
     this.context.unattended = {
       pageFaults: [],
       requirements: []
@@ -30,13 +33,20 @@ class Scheduler
 
   }
 
+  updateContext(step)
+  {
+    
+  }
   * steps()
   {
     while (this.hasUnattendedReqs())
     {
-      yield step
+      next = this.method.next(this.context)
+      this.updateContext(next)
+      yield next
     }
   }
+  
   run() {
     let state = {};
 
