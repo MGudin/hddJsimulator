@@ -24,10 +24,10 @@ class Scheduler
     this.context.direction = context.direction;
     this.context.position = context.position;
     this.context.movements = 0;
-    this.context.attended =  [];// new Lot();
+    this.context.attended =  new Lot();
     this.context.unattended = {
-      pageFaults: [],
-      requirements: []
+      pageFaults: new Lot(),
+      requirements: new Lot()
     };
     this.context.lots = context.lots;
 
@@ -35,8 +35,18 @@ class Scheduler
 
   updateContext(step)
   {
-    
+    this.context.direction = step.direction;
+    this.context.position = step.position;
+    this.context.movements += step.movements;
+    this.context.attended.append(step.requirement);
+
+    if (step.requirement.isPageFault) {
+      this.context.unattended.pageFaults.remove(step.requirement);
+    } else {
+      this.context.unattended.requirements.remove(step.requirement);
+    }
   }
+
   * steps()
   {
     while (this.hasUnattendedReqs())
@@ -46,7 +56,7 @@ class Scheduler
       yield next
     }
   }
-  
+
   run() {
     let state = {};
 
