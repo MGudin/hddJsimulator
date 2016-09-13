@@ -1,10 +1,11 @@
 'use strict';
 
-const root_dir = '../'
-const test = require('tape');
-const SSTF = require(`${root_dir}src/algorithms.js`).SSTF;
-const PageFault = require(`${root_dir}src/simulation.js`).PageFault;
-const Requirement = require(`${root_dir}src/simulation.js`).Requirement;
+const root_dir    = '../'
+const test        = require('tape');
+const SSTF        = require(`${root_dir}src/algorithms.js`).SSTF;
+const lib_sim     = require(`${root_dir}src/simulation.js`);
+const PageFault   = lib_sim.PageFault;
+const Requirement = lib_sim.Requirement;
 
 
 function Context() {
@@ -29,7 +30,6 @@ test('SSTF returns closest requirement available', assert => {
   assert.equals(step.requirement.equals(new Requirement(300)), true);
 
   // test next step
-
   context.unattended.requirements = [new Requirement(400), new Requirement(500)];
   step = SSTF.next(context);
   assert.equals(step.requirement.equals(new Requirement(400)), true);

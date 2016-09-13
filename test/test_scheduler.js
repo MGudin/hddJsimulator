@@ -4,10 +4,12 @@ const test     = require('tape');
 require('babel-polyfill');
 
 const FCFS        = require(`${root_dir}src/algorithms.js`).FCFS;
-const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
 const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const Requirement = require(`${root_dir}src/simulation.js`).Requirement;
-const Lot         = require(`${root_dir}src/simulation.js`).Lot;
+const lib_sim     = require(`${root_dir}src/simulation.js`);
+const Simulation  = lib_sim.Simulation;
+const Requirement = lib_sim.Requirement;
+const PageFault   = lib_sim.PageFault;
+const Lot         = lib_sim.Lot;
 
 
 function SimpleScheduler() {
@@ -62,7 +64,7 @@ test('Scheduler basic interface', assert => {
   assert.end();
 });
 
-test('Scheduler steps returns a generator', assert => {
+test('Scheduler#steps returns a generator', assert => {
 
   let scheduler  = SimpleScheduler();
   let generator  = scheduler.steps();
@@ -73,7 +75,7 @@ test('Scheduler steps returns a generator', assert => {
   assert.end();
 });
 
-test('Scheduler `run` returns a results object', assert => {
+test('Scheduler#run returns a results object', assert => {
 
   let scheduler  = SimpleScheduler();
   let results    = scheduler.run();
@@ -86,8 +88,8 @@ test('Scheduler `run` returns a results object', assert => {
 test('Scheduler#updateContext', assert => {
 
   let scheduler = SimpleScheduler();
-  let req = new Requirement(300);
-  let nextReq = new Requirement(100);
+  let req       = new Requirement(300);
+  let nextReq   = new Requirement(100);
 
   scheduler.updateContext({
     requirement: req,
@@ -131,7 +133,7 @@ test('Scheduler#updateContext moves requirements after attended', assert => {
 
   scheduler.context.unattended = {
     requirements: new Lot([new Requirement(3), new Requirement(50)]),
-    pageFaults: new Lot([new Requirement(3, true)]),
+    pageFaults:   new Lot([new PageFault(3)]),
   };
 
   let unattended = scheduler.context.unattended
@@ -146,7 +148,7 @@ test('Scheduler#updateContext moves requirements after attended', assert => {
   assert.true(unattended.requirements.equals(new Lot([new Requirement(50)])));
 
   scheduler.updateContext({
-    requirement: new Requirement(3, true),
+    requirement: new PageFault(3),
     direction:   false,
     movements:   200,
     position:    200,
