@@ -1,3 +1,5 @@
+'use strict';
+
 const root_dir = '../';
 const Lot = require(`${root_dir}src/simulation.js`).Lot;
 
@@ -39,12 +41,6 @@ class Scheduler
     this.context.position = step.position;
     this.context.movements += step.movements;
     this.context.attended.append(step.requirement);
-
-    if (step.requirement.isPageFault) {
-      this.context.unattended.pageFaults.remove(step.requirement);
-    } else {
-      this.context.unattended.requirements.remove(step.requirement);
-    }
   }
 
   * steps()

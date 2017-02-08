@@ -48,6 +48,11 @@ class Lot
     return this.requirements.length;
   }
 
+  toArray()
+  {
+    return this.requirements;
+  }
+
   first()
   {
     return this.requirements.shift();
@@ -87,6 +92,11 @@ class Lot
     }
 
     return true;
+  }
+
+  isEmpty()
+  {
+    return this.requirements.length === 0;
   }
 
 }

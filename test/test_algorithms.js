@@ -1,9 +1,10 @@
 'use strict';
 
-const root_dir = '../'
-const test = require('tape');
+const root_dir   = '../'
+const test       = require('tape');
 const algorithms = require(`${root_dir}src/algorithms.js`);
-const PageFault = require(`${root_dir}src/simulation.js`).PageFault;
+const PageFault  = require(`${root_dir}src/simulation.js`).PageFault;
+const Lot        = require(`${root_dir}src/simulation.js`).Lot;
 
 
 const requiredConstants = [
@@ -15,15 +16,19 @@ const requiredConstants = [
   'CLOOK'
 ];
 
-const context = {
-  unattended: {
-    pageFaults : [
-      new PageFault(300),
-      new PageFault(400)
-    ],
-    requirements : [],
+var Context = function ()
+{
+  return {
+    unattended: {
+      pageFaults: new Lot([
+        new PageFault(300),
+        new PageFault(400)
+      ]),
+      requirements: new Lot([]),
+    }
   }
 }
+
 
 
 for (let constant of requiredConstants)
@@ -42,6 +47,7 @@ for (let constant of requiredConstants)
   test(`${constant} have same interface for next`, assert => {
 
     let Method = Algorithm;
+    let context = Context();
 
     // ensure all algorithms understand `next`
     assert.equal(typeof Method.next, 'function');
@@ -54,10 +60,11 @@ for (let constant of requiredConstants)
 
   test(`${constant} algorithm returns pf if present`, assert => {
 
+    let context = Context();
     let next = Algorithm.next(context)
     assert.equals(next.requirement.isPageFault, true);
 
-    let next_context = {unattended: { pageFaults: [new PageFault(400)], requirements: [] }};
+    let next_context = {unattended: { pageFaults: new Lot([new PageFault(400)]), requirements:  new Lot([])}};
     next = Algorithm.next(next_context).requirement;
     assert.equals(next.equals(new PageFault(400)), true);
 
@@ -67,6 +74,7 @@ for (let constant of requiredConstants)
 
   test(`${constant} algorithm returns the first page fault available`, assert => {
 
+    let context = Context();
     let next = Algorithm.next(context)
     assert.equals(next.requirement.equals(new PageFault(300)), true)
 
@@ -74,6 +82,7 @@ for (let constant of requiredConstants)
   });
 
   test(`${constant}#next returns results object with proper interface`, assert => {
+    let context = Context();
     let result = Algorithm.next(context);
 
     assert.equals(typeof result.direction,   'boolean');

@@ -1,25 +1,14 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const sim_lib     = require(`${root_dir}src/simulation.js`);
-const Lot         = sim_lib.Lot;
-const Requirement = sim_lib.Requirement;
-const PageFault   = sim_lib.PageFault;
-
-// helpers that some day may become utils
-const RequirementParser = (req_str) => {
-
-  return new Requirement(
-    parseInt(req_str.replace(/\W/, '')),
-    !!req_str.match(/\*\d+/)
-  )
-}
-
-const LotParser = (lot_str) => {
-  return new Lot(lot_str.split(/\s/).map(RequirementParser));
-}
-// ------------------------------------------
+const root_dir          = '../'
+const test              = require('tape');
+const sim_lib           = require(`${root_dir}src/simulation.js`);
+const Lot               = sim_lib.Lot;
+const Requirement       = sim_lib.Requirement;
+const PageFault         = sim_lib.PageFault;
+const parsers           = require(`${root_dir}src/parsers.js`);
+const LotParser         = parsers.LotParser;
+const RequirementParser = parsers.RequirementParser;
 
 test('Lot objects can be compared', assert => {
 
@@ -105,4 +94,32 @@ test('Lot#append can receive array of requirements', assert => {
   assert.true(lot.equals(LotParser('9 8 7')));
 
   assert.end()
+});
+
+test('Lot#first returns first available requirement', assert => {
+  let lot = LotParser('*3 78 54')
+
+  assert.true(lot.first().equals(new PageFault(3)));
+
+  assert.end();
+});
+
+test('Lot#last returns last available requirement', assert => {
+  let lot = LotParser('*3 78 54')
+
+  assert.true(lot.last().equals(new Requirement(54)));
+
+  assert.end();
+});
+
+
+test('Lot knows wether its empty or not', assert => {
+  let lot = new Lot();
+
+  assert.true(lot.isEmpty());
+
+  lot.append(new Requirement(3))
+  assert.false(lot.isEmpty());
+
+  assert.end();
 });

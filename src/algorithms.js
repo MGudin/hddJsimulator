@@ -10,9 +10,10 @@ class BaseAlgorithm
   {
     let requirement;
 
-    if (context.unattended.pageFaults.length > 0)
+    console.log(context.unattended.pageFaults);
+    if (!context.unattended.pageFaults.isEmpty())
     {
-      requirement = context.unattended.pageFaults[0];
+      requirement = context.unattended.pageFaults.first();
     } else {
       requirement = this.getNextRequirement(context);
     }
@@ -25,14 +26,15 @@ class BaseAlgorithm
       direction,
       requirement,
       movements,
-      position: requirement.value
+      position: requirement.valueOf()
     }
 
   }
 
   static getNextRequirement(context)
   {
-    return context.unattended.requirements[0];
+    // to be overwritten by subclasses
+    return context.unattended.requirements.first();
   }
 
   static countMovements(requirement, context)
@@ -40,7 +42,7 @@ class BaseAlgorithm
     let currentPosition = context.position;
     let attendedRequirement = requirement;
 
-    return Math.abs( currentPosition - attendedRequirement);
+    return Math.abs(currentPosition - attendedRequirement);
   }
 
   static getFinalDirection(requirement, context)
@@ -65,13 +67,13 @@ class SSTF extends FCFS
   static getNextRequirement(context)
   {
     let position = context.position;
-    let requirement;
+    let abs = Math.abs;
 
     let closestRequirement = (previous, current) => {
-      return (Math.abs(previous - position) < Math.abs(current - position)) ? previous : current
+      return (abs(previous - position) < abs(current - position)) ? previous : current
     };
 
-    return context.unattended.requirements.reduce(closestRequirement)
+    return context.unattended.requirements.toArray().reduce(closestRequirement)
   }
 
   className()

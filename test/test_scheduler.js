@@ -145,16 +145,11 @@ test('Scheduler#updateContext moves requirements after attended', assert => {
     position:    200,
   });
 
-  assert.true(unattended.requirements.equals(new Lot([new Requirement(50)])));
+  console.log(scheduler.context)
 
-  scheduler.updateContext({
-    requirement: new PageFault(3),
-    direction:   false,
-    movements:   200,
-    position:    200,
-  });
-
-  assert.true(unattended.pageFaults.equals(new Lot()));
+  assert.equal(scheduler.context.movements, 200)
+  assert.equal(scheduler.context.position, 200)
+  assert.equal(scheduler.context.direction, false)
 
   assert.end();
 });
