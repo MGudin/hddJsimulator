@@ -50,15 +50,14 @@ class Scheduler
     this.context.attended.append(step.requirement);
     while (this.context.movementsUntilNextLot <= 0 && this.context.lots.hasLots())
     {
-      this.mergeLot(this.lotsBatch.next());
+      this.mergeLot(this.context.lots.next());
     }
   }
 
   mergeLot (nextLot)
   {
-    // nextLot = {'movementsUntilNext: 30, lot: lot}
     this.context.movementsUntilNextLot += nextLot.movementsUntilNextLot;
-    nextLot.lot.toArray().forEach((req) => this.addUnattended);
+    nextLot.lot.toArray().forEach((req) => this.addUnattended(req));
   }
 
   addUnattended(req)

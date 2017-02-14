@@ -45,7 +45,7 @@ test('Scheduler instance variables are beeing set', assert => {
   assert.equals(typeof scheduler.context, 'object');
   assert.equals(typeof scheduler.method, 'function');
   assert.equals(typeof scheduler.context.lots, 'object');
-  
+
   assert.equals(scheduler.context.direction, true);
   assert.equals(scheduler.context.position, 0);
   assert.equals(scheduler.context.movements, 0);
@@ -121,40 +121,66 @@ test('Scheduler#updateContext', assert => {
   assert.equals(scheduler.context.movements, 500);
   assert.equals(scheduler.context.position, 200);
   assert.equals(scheduler.context.movementsUntilNextLot, 0);
-  
+
   assert.end();
 });
 
-test('Scheduler#updateContext merges lots when movementsUntilNextLot', assert => {
+test('Scheduler#updateContext merges lots when movementsUntilNextLot smaller = 0', assert => {
+  let lotsBatch = new LotsBatch([
+    {movementsUntilNextLot: 3, lot: LotParser('45 45')},
+    {movementsUntilNextLot: 0, lot: LotParser('45 45')},
+  ]);
+  let scheduler  = SimpleScheduler();
+  let step = {
+    requirement: new Requirement(3),
+    direction:   true,
+    movements:   300,
+    position:    300,
+  };
 
+  scheduler.context.lots = lotsBatch;
+  scheduler.updateContext(step);
+
+  assert.equals(lotsBatch.hasLots(), false);
+  assert.equals(scheduler.context.unattended.requirements.size(), 4);
+  assert.equals(scheduler.context.movementsUntilNextLot, -297);
   assert.end()
 })
 
 test('Scheduler#mergeLot updates unattended lots', assert => {
-// tests unattended.{pageFaults,rewquirements}.length is addded
+
+  let nextLot = {lot: LotParser('3 4 5 *3 *4'), movementsUntilNextLot: 100};
+  let scheduler = SimpleScheduler();
+  scheduler.mergeLot(nextLot)
+
+  assert.equals(scheduler.context.unattended.requirements.size(), 3);
+  assert.equals(scheduler.context.unattended.pageFaults.size(), 2);
+
   assert.end();
 })
 
 test('Scheduler#mergeLot updates movementsUntilNextLot', assert => {
-  let batchLot = new LotsBatch(
-    [
-      { lot: LotParser('3 4 5'), movementsUntilNextLot: 100 }
-    ]
-  )
-  
+  let nextLot = { lot: LotParser('3 4 5'), movementsUntilNextLot: 100 }
+
   let scheduler = SimpleScheduler();
-  scheduler.mergeLot(batchLot.next())
+  scheduler.mergeLot(nextLot)
 
   // by default SimplesSheduler has movementsUntilNextLot = 0
-
   assert.equal(scheduler.context.movementsUntilNextLot, 100);
 
   assert.end();
 })
 
 test('Scheduler#addUnattended', assert => {
-  //test it adds requirement to corresponding list
 
-  
+  let scheduler  = SimpleScheduler();
+  let requirement = new Requirement(5);
+  let pageFault = new PageFault(44);
+
+  scheduler.addUnattended(requirement);
+  scheduler.addUnattended(pageFault);
+
+  assert.equals(scheduler.context.unattended.requirements.last(), requirement);
+  assert.equals(scheduler.context.unattended.pageFaults.last(), pageFault);
   assert.end();
 })
