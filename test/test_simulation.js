@@ -12,7 +12,7 @@ test('Simulation has default values when initialized without params', assert => 
   assert.equals(simulation.name, 'Sample Simulation');
   assert.equals(simulation.direction, true);
   assert.equals(simulation.position, 0);
-  assert.equals(simulation.lots.length, 0);
+  assert.equals(typeof simulation.lotsBatch, 'object');
 
   assert.end();
 });
@@ -45,7 +45,6 @@ test('Simulation initializes with default params and updates only args passed to
   assert.equals(simulation.name, 'Sample Simulation');
   assert.equals(simulation.direction, false);
   assert.equals(simulation.position, 0);
-  assert.equals(simulation.lots.length, 0);
-
+  assert.equals(typeof simulation.lotsBatch, 'object');
   assert.end();
 });

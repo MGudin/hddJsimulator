@@ -118,6 +118,25 @@ class Hdd
   }
 }
 
+class LotsBatch
+{
+  constructor(lots = [])
+  {
+    this.lots = lots;
+  }
+
+  hasLots()
+  {
+    return this.lots.length>0;
+  }
+
+  next()
+  {
+    return this.lots.shift();
+  }
+}
+
+
 class Simulation
 {
 
@@ -129,7 +148,7 @@ class Simulation
       direction: true,
       position:  0,
       hdd:       new Hdd(),
-      lots:      []
+      lotsBatch:  new LotsBatch()
     };
     Object.assign(this, defaultValues);
     // Updates default values with params
@@ -140,6 +159,7 @@ class Simulation
 
 module.exports = {
   Simulation,
+  LotsBatch,
   Hdd,
   Lot,
   Requirement,
