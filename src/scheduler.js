@@ -69,7 +69,7 @@ class Scheduler
       this.context.unattended.requirements.append(req)
     }
   }
-      
+
 
   * steps()
   {
@@ -81,10 +81,15 @@ class Scheduler
     }
   }
 
-  run() {
-    let state = {};
+  hasUnattendedReqs()
+  {
+    return ! this.context.unattended.pageFaults.isEmpty() &&
+           ! this.context.unattended.requirements.isEmpty();
+  }
 
-    return state;
+  run() 
+  {
+    return [...this.steps()];
   }
 }
 
