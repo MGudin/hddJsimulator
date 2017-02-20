@@ -1,12 +1,19 @@
 'use strict';
 
-const root_dir = '../'
-const test = require('tape');
-const FCFS = require(`${root_dir}src/algorithms.js`).FCFS;
-const PageFault = require(`${root_dir}src/simulation.js`).PageFault;
+const root_dir    = '../'
+const test        = require('tape');
+const FCFS        = require(`${root_dir}src/algorithms.js`).FCFS;
+const PageFault   = require(`${root_dir}src/simulation.js`).PageFault;
 const Requirement = require(`${root_dir}src/simulation.js`).Requirement;
-const Lot = require(`${root_dir}src/simulation.js`).Lot;
+const Lot         = require(`${root_dir}src/simulation.js`).Lot;
+const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
+const parsers     = require(`${root_dir}src/parsers.js`);
+const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
+const LotParser   = parsers.LotParser;
 
+function SimpleScheduler() {
+  return new Scheduler(FCFS, new Simulation());
+}
 
 function Context() {
   return {
@@ -84,4 +91,20 @@ test('FCFS test returned state is correct (without page faults)', assert => {
   assert.equals(step.direction, false)
   assert.equals(step.movements, 100)
   assert.end();
+});
+
+
+test('FCFS#run', assert => {
+  // TODO: test that shit
+  // let scheduler = SimpleScheduler()
+  // let expected = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  // let results = scheduler.run();
+  //
+  // for (const step of results) 
+  // {
+  //   assert.true(step.requirement.equals(expected.next()));
+  // }
+  // console.log(results);
+  // assert.equals(results.attended, );
+  // assert.end();
 });
