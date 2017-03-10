@@ -184,3 +184,31 @@ test('Scheduler#addUnattended', assert => {
   assert.equals(scheduler.context.unattended.pageFaults.last(), pageFault);
   assert.end();
 })
+
+test('Scheduler#hasUnnatendedReqs', assert => {
+  // Spected results:
+  // 1 - PFS empty & reqs empty -> F
+  // 2 - PFS empty & reqs not empty -> T
+  // 3 - PFS not empty & reqs empty -> T
+  // 4 - PFS not empty & reqs not empty -> T
+
+  let scheduler = SimpleScheduler();
+
+  // since SimpleScheduler instantiates a scheduler
+  // with empty requirements we can test first case
+  assert.equals(scheduler.hasUnattendedReqs(), false);
+
+  // now adds a requirement to scheduler. test second case
+  scheduler.context.unattended.requirements.append(new Requirement(333));
+  assert.equals(scheduler.hasUnattendedReqs(), true);
+
+  // add a PF to context. Test fourth case
+  scheduler.context.unattended.requirements.append(new PageFault(25));
+  assert.equals(scheduler.hasUnattendedReqs(), true);
+
+  // finally remove requirement from unnatended. test third case
+  scheduler.context.unattended.requirements.first();
+  assert.equals(scheduler.hasUnattendedReqs(), true);
+  
+  assert.end();
+})

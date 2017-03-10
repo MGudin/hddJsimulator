@@ -1,7 +1,9 @@
 'use strict';
 
 const root_dir = '../';
-const Lot = require(`${root_dir}src/simulation.js`).Lot;
+
+const Lot = require('./simulation').Lot;
+const Requirement = require('./simulation').Requirement;
 
 class Scheduler
 {
@@ -83,8 +85,7 @@ class Scheduler
 
   hasUnattendedReqs()
   {
-    return ! this.context.unattended.pageFaults.isEmpty() &&
-           ! this.context.unattended.requirements.isEmpty();
+    return ! (this.context.unattended.pageFaults.isEmpty() && this.context.unattended.requirements.isEmpty());
   }
 
   run() 
