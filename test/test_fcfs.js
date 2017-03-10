@@ -11,6 +11,7 @@ const parsers     = require(`${root_dir}src/parsers.js`);
 const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
 const LotParser   = parsers.LotParser;
 
+
 function SimpleScheduler() {
   return new Scheduler(FCFS, new Simulation());
 }
@@ -93,18 +94,44 @@ test('FCFS test returned state is correct (without page faults)', assert => {
   assert.end();
 });
 
+// TODO: maybe test final state as a whole instead of testing
+// every final state property?
+test('FCFS#run - single lot - tests attended requirement order', assert => {
+  
+  let scheduler = SimpleScheduler()
+  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  let expected = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  
+  scheduler.context.unattended.requirements = lot
 
-test('FCFS#run', assert => {
-  // TODO: test that shit
-  // let scheduler = SimpleScheduler()
-  // let expected = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
-  // let results = scheduler.run();
-  //
-  // for (const step of results) 
-  // {
-  //   assert.true(step.requirement.equals(expected.next()));
-  // }
-  // console.log(results);
-  // assert.equals(results.attended, );
-  // assert.end();
+  let results = scheduler.run();
+  for (const step of results) 
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
+
+  assert.end();
 });
+
+test('FCFS#run - single lot - movements', assert => {
+  let scheduler = SimpleScheduler()
+  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  // Given this lot, movements after it has been attended with FCFS
+  // algorithm shoud be 1595
+   
+  scheduler.context.unattended.requirements = lot
+  let results = scheduler.run();
+
+  assert.equals(scheduler.context.movements, 1595)
+  assert.end();
+})
+
+test('FCFS#run - single lot - final direction', assert => {
+  let scheduler = SimpleScheduler()
+  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  // Given this lot, final direction of the head should be right/"->" (true)
+  assert.equals(scheduler.context.direction, true)
+
+  assert.end();
+})
+
