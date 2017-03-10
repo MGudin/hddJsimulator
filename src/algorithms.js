@@ -10,7 +10,6 @@ class BaseAlgorithm
   {
     let requirement;
 
-    console.log(context.unattended.pageFaults);
     if (!context.unattended.pageFaults.isEmpty())
     {
       requirement = context.unattended.pageFaults.first();
