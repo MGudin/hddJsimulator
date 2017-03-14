@@ -1,8 +1,10 @@
 'use strict';
 
 const root_dir = '..';
-const Lot = require(`${root_dir}/src/simulation.js`).Lot;
-const Requirement = require(`${root_dir}/src/simulation.js`).Requirement;
+// const Lot = require(`${root_dir}/src/simulation.js`).Lot;
+const Lot = require('./simulation').Lot;
+// const Requirement = require(`${root_dir}/src/simulation.js`).Requirement;
+const Requirement = require('./simulation').Requirement;
 
 const RequirementParser = (req_str) => {
   //==========================================================================

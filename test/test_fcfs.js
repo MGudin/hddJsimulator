@@ -10,6 +10,7 @@ const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
 const parsers     = require(`${root_dir}src/parsers.js`);
 const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
 const LotParser   = parsers.LotParser;
+const examples    = require('./examples.js');
 
 
 function SimpleScheduler() {
@@ -96,7 +97,7 @@ test('FCFS test returned state is correct (without page faults)', assert => {
 
 // TODO: maybe test final state as a whole instead of testing
 // every final state property?
-test('FCFS#run - single lot - tests attended requirement order', assert => {
+test('FCFS#run - single lot - final context', assert => {
   
   let scheduler = SimpleScheduler()
   let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
@@ -110,28 +111,27 @@ test('FCFS#run - single lot - tests attended requirement order', assert => {
     assert.true(step.requirement.equals(expected.first()));
   }
 
+  assert.equals(scheduler.context.direction, true)
+  assert.equals(scheduler.context.movements, 1595)
+  
   assert.end();
 });
 
-test('FCFS#run - single lot - movements', assert => {
-  let scheduler = SimpleScheduler()
-  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
-  // Given this lot, movements after it has been attended with FCFS
-  // algorithm shoud be 1595
-   
-  scheduler.context.unattended.requirements = lot
+
+test('FCFS#run - lots batch - final context', assert => {
+
+  let scheduler = new Scheduler(FCFS, examples.simulation14);
+  let expected = LotParser('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55 75 115 220 266');
+
   let results = scheduler.run();
+  for (const step of results) 
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
 
-  assert.equals(scheduler.context.movements, 1595)
+  assert.equals(scheduler.context.movements, 1451);
+
+  assert.true(scheduler.context.direction);
+  
   assert.end();
 })
-
-test('FCFS#run - single lot - final direction', assert => {
-  let scheduler = SimpleScheduler()
-  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
-  // Given this lot, final direction of the head should be right/"->" (true)
-  assert.equals(scheduler.context.direction, true)
-
-  assert.end();
-})
-

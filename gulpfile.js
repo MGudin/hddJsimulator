@@ -47,6 +47,11 @@ gulp.task('default', () => {
     browserSync.reload();
   });
 
+  watch('test/examples.js', () => {
+    gulp.start('javascript');
+    browserSync.reload();
+  });
+
 });
 
 
