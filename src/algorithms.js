@@ -33,7 +33,7 @@ class BaseAlgorithm
   static getNextRequirement(context)
   {
     // to be overwritten by subclasses
-    return context.unattended.requirements.first();
+    return context.unattended.requirements.at(0);
   }
 
   static countMovements(requirement, context)
@@ -72,7 +72,9 @@ class SSTF extends FCFS
       return (abs(previous - position) < abs(current - position)) ? previous : current
     };
 
-    return context.unattended.requirements.toArray().reduce(closestRequirement)
+    let next =  context.unattended.requirements.toArray().reduce(closestRequirement);
+
+    return next;
   }
 
   className()

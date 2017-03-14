@@ -45,6 +45,7 @@ class Scheduler
 
   updateContext(step)
   {
+    this.context.unattended.requirements.remove(step.requirement);
     this.context.direction = step.direction;
     this.context.position = step.position;
     this.context.movements += step.movements;
