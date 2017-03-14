@@ -38,7 +38,7 @@ class Scheduler
     this.context.lots = context.lotsBatch;
     if (this.context.lots.hasLots())
     {
-      this.mergeLot(this.lotsBatch.next());
+      this.mergeLot(this.context.lots.next());
     }
 
   }
@@ -77,7 +77,7 @@ class Scheduler
   {
     while (this.hasUnattendedReqs())
     {
-      next = this.method.next(this.context)
+      let next = this.method.next(this.context)
       this.updateContext(next)
       yield next
     }
