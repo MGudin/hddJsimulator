@@ -45,12 +45,11 @@ test('SSTF returns closest requirement available', assert => {
 test('SSTF#run - single lot - final context', assert => {
   
   let scheduler = new Scheduler( SSTF, examples.simulation12);
-  // let lot = LotParser('86 147 91 177 94 150 102 175 130 32 120 58 66 115');
-  let expected = LotParser('86 91 94 102 115 120 130 147 150 175 177 66 58 32')
+  let expected = LotParser('86 91 94 102 115 120 130 147 150 175 177 66 58 32');
   
   let results = scheduler.run();
   
-  for (const step of results) 
+  for (let step of results) 
   {
     assert.true(step.requirement.equals(expected.first()));
   }
@@ -60,3 +59,22 @@ test('SSTF#run - single lot - final context', assert => {
   
   assert.end();
 });
+
+test('SSTF#run - lots batch - final context', assert => {
+
+  let scheduler = new Scheduler(SSTF, examples.simulation14());
+  let expected = LotParser('140 147 150 126 118 115 99 94 81 75 55 50 22 175 212 220 225 266 277 280');
+  
+  
+  let results = scheduler.run();
+  for (const step of results) 
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
+
+  assert.equals(scheduler.context.movements, 399);
+
+  assert.true(scheduler.context.direction);
+  
+  assert.end();
+})

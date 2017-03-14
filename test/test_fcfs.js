@@ -120,7 +120,7 @@ test('FCFS#run - single lot - final context', assert => {
 
 test('FCFS#run - lots batch - final context', assert => {
 
-  let scheduler = new Scheduler(FCFS, examples.simulation14);
+  let scheduler = new Scheduler(FCFS, examples.simulation14());
   let expected = LotParser('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55 75 115 220 266');
 
   let results = scheduler.run();
