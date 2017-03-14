@@ -18,9 +18,27 @@ var batches = {
     {lot: LotParser('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55'), movementsUntilNextLot: 30}, 
     {lot: LotParser('75 115 220 266'), movementsUntilNextLot: 0}
   ]),
+  exercise12: new LotsBatch([
+    {lot: LotParser('86 147 91 177 94 150 102 175 130 32 120 58 66 115') }
+  ]),
 }
 
 // TP6-N6-iso.pdf
+// ex 12
+var hdd12 = new lib_sim.Hdd({
+  name:   'Excercise 12 HDD',
+  tracks: 200
+})
+
+var simulation12 = new lib_sim.Simulation({
+  name : 'Excercise 12 simulation',
+  direction: true,
+  position: 83,
+  hdd: hdd12,
+  lotsBatch: batches.exercise12
+})
+
+var simulation
 // ex 14
 
 var hdd14 = new lib_sim.Hdd({
@@ -39,4 +57,5 @@ var simulation14 = new lib_sim.Simulation({
 module.exports = {
   batches,
   simulation14,
+  simulation12,
 }
