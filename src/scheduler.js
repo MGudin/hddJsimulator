@@ -86,7 +86,7 @@ class Scheduler
 
   hasUnattendedReqs()
   {
-    return ! (this.context.unattended.pageFaults.isEmpty() && this.context.unattended.requirements.isEmpty());
+    return !this.context.unattended.pageFaults.isEmpty() ||  !this.context.unattended.requirements.isEmpty();
   }
 
   run() 
