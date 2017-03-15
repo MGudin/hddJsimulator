@@ -7,6 +7,8 @@ const PageFault   = require(`${root_dir}src/simulation.js`).PageFault;
 const Requirement = require(`${root_dir}src/simulation.js`).Requirement;
 const Lot         = require(`${root_dir}src/simulation.js`).Lot;
 const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
+const LotsBatch   = require(`${root_dir}src/simulation.js`).LotsBatch;
+const Hdd         = require(`${root_dir}src/simulation.js`).Hdd;
 const parsers     = require(`${root_dir}src/parsers.js`);
 const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
 const LotParser   = parsers.LotParser;
@@ -135,3 +137,40 @@ test('FCFS#run - lots batch - final context', assert => {
   
   assert.end();
 })
+
+test('FCFS#run - single lot with page faults - final context', assert => {
+  
+
+  let lotBatch = new LotsBatch(
+    [
+      { lot: LotParser('126 147 *81 277 94 150 212 17 *140 *225 280 50 99 118 22 55') }
+    ]
+  );
+
+  let hdd = new Hdd({tracks:300});
+  
+  let simulation = new Simulation(
+    {
+      hdd: hdd,
+      lotsBatch: lotBatch
+    }
+  );
+      
+  let scheduler = new Scheduler(FCFS, simulation);
+  
+  let expected = LotParser('*81 *140 *225 126 147 277 94 150 212 17 280 50 99 118 22 55');
+  
+
+
+  let results = scheduler.run();
+  for (const step of results) 
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
+
+  assert.equals(scheduler.context.direction, true)
+  assert.equals(scheduler.context.movements, 1661)
+  
+  assert.end();
+})
+
