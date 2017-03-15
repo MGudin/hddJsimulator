@@ -98,22 +98,22 @@ test('FCFS test returned state is correct (without page faults)', assert => {
 // TODO: maybe test final state as a whole instead of testing
 // every final state property?
 test('FCFS#run - single lot - final context', assert => {
-  
+
   let scheduler = SimpleScheduler()
   let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
   let expected = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
-  
+
   scheduler.context.unattended.requirements = lot
 
   let results = scheduler.run();
-  for (const step of results) 
+  for (const step of results)
   {
     assert.true(step.requirement.equals(expected.first()));
   }
 
   assert.equals(scheduler.context.direction, true)
   assert.equals(scheduler.context.movements, 1595)
-  
+
   assert.end();
 });
 
@@ -124,7 +124,7 @@ test('FCFS#run - lots batch - final context', assert => {
   let expected = LotParser('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55 75 115 220 266');
 
   let results = scheduler.run();
-  for (const step of results) 
+  for (const step of results)
   {
     assert.true(step.requirement.equals(expected.first()));
   }
@@ -132,6 +132,6 @@ test('FCFS#run - lots batch - final context', assert => {
   assert.equals(scheduler.context.movements, 1451);
 
   assert.true(scheduler.context.direction);
-  
+
   assert.end();
 })

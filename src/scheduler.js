@@ -57,7 +57,7 @@ class Scheduler
     }
   }
 
-  mergeLot (nextLot)
+  mergeLot(nextLot)
   {
     this.context.movementsUntilNextLot += nextLot.movementsUntilNextLot;
     nextLot.lot.toArray().forEach((req) => this.addUnattended(req));
@@ -86,10 +86,11 @@ class Scheduler
 
   hasUnattendedReqs()
   {
-    return !this.context.unattended.pageFaults.isEmpty() ||  !this.context.unattended.requirements.isEmpty();
+      return ! this.context.unattended.pageFaults.isEmpty() ||
+             ! this.context.unattended.requirements.isEmpty();
   }
 
-  run() 
+  run()
   {
     return [...this.steps()];
   }
