@@ -94,4 +94,9 @@ for (let constant of requiredConstants)
     assert.end();
   });
 
+  test(`${constant}#className returns correct name`, assert => {
+    assert.equals(new Algorithm().className(), constant);
+    assert.end();
+  });
+
 } // end for
