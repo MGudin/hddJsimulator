@@ -63,17 +63,21 @@ class Lot
     return this.requirements.pop();
   }
 
-  remove(requirement)
+  remove(other)
   {
-    for (let i = 0, length = this.size(); i < length; i++)
+    let index = 0;
+    let removed = false;
+
+    for (let requirement of this.requirements)
     {
-      if (requirement.equals(this.requirements[i]))
+      if (other.equals(requirement))
       {
-        this.requirements.splice(i, 1);
-        return true;
+        this.requirements.splice(index, 1);
+        removed = true;
       }
+      index++;
     }
-    return false;
+    return removed;
   }
 
   at(index)
