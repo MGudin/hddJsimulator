@@ -83,10 +83,34 @@ class SSTF extends FCFS
   }
 }
 
-class LOOK extends FCFS {}
-class CLOOK extends FCFS {}
-class SCAN extends FCFS {}
-class CSCAN extends FCFS {}
+class LOOK extends FCFS
+{
+  className()
+  {
+    return 'LOOK'
+  }
+}
+class CLOOK extends FCFS
+{
+  className()
+  {
+    return 'CLOOK'
+  }
+}
+class SCAN extends FCFS
+{
+  className()
+  {
+    return 'SCAN'
+  }
+}
+class CSCAN extends FCFS
+{
+  className()
+  {
+    return 'CSCAN'
+  }
+}
 
 module.exports = {
   FCFS,
