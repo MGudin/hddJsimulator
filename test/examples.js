@@ -63,8 +63,27 @@ var simulation14 = function() {
   })
 }
 
+// ex 15
+var hdd15 = new lib_sim.Hdd({
+  name:   'Excercise 15 HDD',
+  tracks: 300
+})
+
+
+var simulation15 = function() {
+
+  return new lib_sim.Simulation({
+    name : 'Excercise 15 simulation',
+    direction: true,
+    position: 140,
+    hdd: hdd15,
+    lotsBatch: batches.with_pfs()
+  })
+}
+
 module.exports = {
   batches,
   simulation14,
   simulation12,
+  simulation15,
 }
