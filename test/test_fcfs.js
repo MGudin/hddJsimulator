@@ -174,3 +174,18 @@ test('FCFS#run - single lot with page faults - final context', assert => {
   assert.end();
 })
 
+test('FCFS#run - batch with pagefaults - final context', assert => {
+  let scheduler = new Scheduler(FCFS, examples.simulation15());
+  let expected = LotParser('*147 99 *150 *149 110 42 25 186 270 50 99 81 257 94 133 212 175 130 85 202 288 75 285 201 59')
+  let results = scheduler.run();
+
+  // console.log(expected);
+    for (const step of results) 
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
+
+  assert.equals(scheduler.context.direction, false);
+  assert.equals(scheduler.context.movements, 2199);
+  assert.end();
+})
