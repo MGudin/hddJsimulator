@@ -44,7 +44,7 @@ test('SSTF returns closest requirement available', assert => {
 
 test('SSTF#run - single lot - final context', assert => {
 
-  let scheduler = new Scheduler( SSTF, examples.simulation12);
+  let scheduler = new Scheduler( SSTF, examples.simulation12());
   let expected = LotParser('86 91 94 102 115 120 130 147 150 175 177 66 58 32');
 
   let results = scheduler.run();

@@ -51,6 +51,14 @@ class BaseAlgorithm
 
 }
 
+const getClosestRequirementFn = (position) => {
+  return (previous, current) => {
+    let abs = Math.abs;
+    return (abs(previous - position) < abs(current - position)) ? previous : current
+  };
+}
+
+
 class FCFS extends BaseAlgorithm
 {
   className()
@@ -66,15 +74,9 @@ class SSTF extends FCFS
   static getNextRequirement(context)
   {
     let position = context.position;
-    let abs = Math.abs;
-
-    let closestRequirement = (previous, current) => {
-      return (abs(previous - position) < abs(current - position)) ? previous : current
-    };
-
-    let next =  context.unattended.requirements.toArray().reduce(closestRequirement);
-
-    return next;
+    return context.unattended.requirements.toArray().reduce(
+      getClosestRequirementFn(position)
+    );
   }
 
   className()
@@ -85,6 +87,7 @@ class SSTF extends FCFS
 
 class LOOK extends FCFS
 {
+  // after pf, keeps new direction
   className()
   {
     return 'LOOK'
@@ -92,13 +95,61 @@ class LOOK extends FCFS
 }
 class CLOOK extends FCFS
 {
+  // after pf, keeps old direction
   className()
   {
     return 'CLOOK'
   }
 }
+
 class SCAN extends FCFS
 {
+  // after pf, keeps new direction
+  static splitRequirements(requirements, position)
+  {
+    let greater = [];
+    let smaller = [];
+    for (let req of requirements.toArray())
+    {
+      if (req.value > position) {
+        greater.push(req)
+      } else {
+        smaller.push(req)
+      }
+    }
+    return {greater, smaller}
+  }
+
+  static getNextRequirement(context)
+  {
+    let splitReqs = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+    if (context.direction) {
+      return splitReqs.greater.reduce(getClosestRequirementFn(context.position))
+    } else {
+      return splitReqs.smaller.reduce(getClosestRequirementFn(context.position))
+    }
+  }
+
+  countMovements(requirement, context)
+  {
+    let greater, smaller = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+
+    let reqs = context.direction ? greater : smaller;
+
+    if (reqs.length > 0)
+    {
+      return super.countMovements(requirement, context);
+    } else {
+      return 0;
+    }
+  }
+
   className()
   {
     return 'SCAN'
@@ -106,6 +157,7 @@ class SCAN extends FCFS
 }
 class CSCAN extends FCFS
 {
+  // after pf, keeps old direction
   className()
   {
     return 'CSCAN'

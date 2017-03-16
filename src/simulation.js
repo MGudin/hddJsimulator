@@ -100,7 +100,7 @@ class Lot
 
   isEmpty()
   {
-    return this.requirements.length === 0;
+    return this.size() === 0;
   }
 
 }
@@ -111,10 +111,10 @@ class Hdd
   {
     // Set default hdd values
     var defaultValues = {
-    name:      'Sample Hdd',
-    tracks:    512,
-    rpm:       5400,
-    seek_time: 500
+      name:      'Sample Hdd',
+      tracks:    512,
+      rpm:       5400,
+      seek_time: 500
     }
     Object.assign(this, defaultValues)
     // Updates default values with params
