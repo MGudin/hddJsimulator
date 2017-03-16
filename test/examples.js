@@ -34,7 +34,7 @@ var batches = {
 // ex 12
 var hdd12 = new lib_sim.Hdd({
   name:   'Excercise 12 HDD',
-  tracks: 200
+  tracks: 199
 })
 
 var simulation12 = function() {

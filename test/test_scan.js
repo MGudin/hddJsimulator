@@ -15,30 +15,49 @@ const LotParser   = parsers.LotParser;
 test('SCAN#run - single lot - final context', assert => {
 
   let scheduler = new Scheduler(SCAN, examples.simulation12());
-  let expected = LotParser('86 91 94 102 115 120 130 147 150 175 177 66 58 32');
+  let expected = LotParser('86 91 94 102 115 120 130 147 150 175 177 199 66 58 32');
 
   let results = scheduler.run();
 
-    console.log(results);
+  console.log(results);
   for (let step of results)
   {
     assert.true(step.requirement.equals(expected.first()));
   }
 
   assert.equals(scheduler.context.direction, false);
-  assert.equals(scheduler.context.movements, 280);
+  assert.equals(scheduler.context.movements, 283);
 
   assert.end();
 });
 
-test('splitRequirements', assert => {
+test('SCAN#splitRequirements returns propper object', assert => {
 
-  let lot = LotParser('86 91 94 102 115 120 130 147 150 175 177 66 58 32');
-  let greater = SCAN.splitRequirements(lot, 83);
-  console.log(greater.greater)
+  let lot = LotParser('86 147 91 177 94 150 102 175 130 32 120 58 66 115');
+  let greater = LotParser('86 147 91 177 94 150 102 175 130 120 115');
+  let smaller = LotParser('32 58 66');
+  let split = SCAN.splitRequirements(lot, 83);
+
+  assert.equals(typeof split, 'object');
+  assert.equals(typeof split.greater, 'object');
+  assert.equals(typeof split.smaller, 'object');
+
+
+  assert.true(split.greater.equals(greater));
+  assert.true(split.smaller.equals(smaller));
+
   assert.end();
 });
 
+// test('SCAN#countMovements', assert => {
+//   let lot = LotParser('50 110');
+//   let context.unattended.requirements = lot;
+//   let context.position = 60;
+//   let split = SCAN.splitRequirements(Lot, 60);
+
+  
+//   assert.end();
+// })
 // test('SCAN#run - lots batch - final context', assert => {
 //
 //   let scheduler = new Scheduler(SCAN, examples.simulation14());

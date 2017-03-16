@@ -3,10 +3,11 @@
 class Requirement
 {
 
-  constructor(value, isPageFault = false)
+  constructor(value, isPageFault = false, edge=false)
   {
     this.value = value;
     this.isPageFault = isPageFault;
+    this.edge = edge;
   }
 
   equals(other)
@@ -25,11 +26,18 @@ class PageFault extends Requirement
 {
   constructor(value)
   {
-    super(value, true);
+    super(value, true, false);
   }
 
 }
 
+class Edge extends Requirement
+{
+  constructor(value)
+  {
+    super(value, false, true);
+  }
+}
 class Lot
 {
 
@@ -168,4 +176,5 @@ module.exports = {
   Lot,
   Requirement,
   PageFault,
+  Edge,
 }
