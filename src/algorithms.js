@@ -104,12 +104,12 @@ class SCAN extends FCFS
     {
       (req.value > position) ? greater.append(req) : smaller.append(req)
     }
-    return {greater, smaller}
+    return [greater, smaller];
   }
 
   static getNextRequirement(context)
   {
-    let {greater, smaller} = this.splitRequirements(
+    let [greater, smaller] = this.splitRequirements(
       context.unattended.requirements,
       context.position
     );

@@ -35,7 +35,7 @@ test('SCAN#splitRequirements returns propper object', assert => {
   let lot = LotParser('86 147 91 177 94 150 102 175 130 32 120 58 66 115');
   let expected_greater = LotParser('86 147 91 177 94 150 102 175 130 120 115');
   let expected_smaller = LotParser('32 58 66');
-  let {greater, smaller} = SCAN.splitRequirements(lot, 83);
+  let [greater, smaller] = SCAN.splitRequirements(lot, 83);
 
   assert.equals(typeof greater, 'object');
   assert.equals(typeof smaller, 'object');
