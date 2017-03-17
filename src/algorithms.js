@@ -125,8 +125,7 @@ class SCAN extends FCFS
   static getFinalDirection(requirement, context)
   {
     let direction = super.getFinalDirection(requirement, context);
-    let finalDirection =
-    return requirement.edge ? !direction : direction;
+    return (requirement.edge) ? !direction : direction;
   }
 
   className()
