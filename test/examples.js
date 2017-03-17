@@ -51,7 +51,7 @@ var simulation12 = function() {
 
 var hdd14 = new lib_sim.Hdd({
   name:   'Excercise 14 HDD',
-  tracks: 300
+  tracks: 299
 })
 
 var simulation14 = function() {
@@ -68,7 +68,7 @@ var simulation14 = function() {
 // ex 15
 var hdd15 = new lib_sim.Hdd({
   name:   'Excercise 15 HDD',
-  tracks: 300
+  tracks: 299
 })
 
 

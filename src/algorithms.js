@@ -125,12 +125,12 @@ class SCAN extends FCFS
   static getFinalDirection(requirement, context)
   {
     let direction = super.getFinalDirection(requirement, context);
-    return (requirement.edge) ? !direction : direction;
+    return requirement.edge ? !direction : direction;
   }
 
   className()
   {
-    return 'SCAN'
+    return 'SCAN';
   }
 }
 class CSCAN extends FCFS
@@ -138,7 +138,7 @@ class CSCAN extends FCFS
   // after pf, keeps old direction
   className()
   {
-    return 'CSCAN'
+    return 'CSCAN';
   }
 }
 

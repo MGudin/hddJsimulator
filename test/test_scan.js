@@ -46,52 +46,41 @@ test('SCAN#splitRequirements returns propper object', assert => {
   assert.end();
 });
 
-// test('SCAN#countMovements', assert => {
-//   let lot = LotParser('50 110');
-//   let context.unattended.requirements = lot;
-//   let context.position = 60;
-//   let split = SCAN.splitRequirements(Lot, 60);
+test('SCAN#run - lots batch - final context', assert => {
 
+  let scheduler = new Scheduler(SCAN, examples.simulation14());
+  let expected = LotParser(
+    '147 150 175 212 220 225 266 277 280 299 ' +
+    '140 126 118 115 99 94 81 75 55 50 22'
+  );
 
-//   assert.end();
-// })
+  let results = scheduler.run();
+  for (let step of results)
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
 
-// test('SCAN#run - lots batch - final context', assert => {
-//
-//   let scheduler = new Scheduler(SCAN, examples.simulation14());
-//   let expected = LotParser(
-//     '140 147 150 126 118 115 99 94 81 75 55 ' +
-//     '50 22 175 212 220 225 266 277 280'
-//   );
-//
-//
-//   let results = scheduler.run();
-//   for (let step of results)
-//   {
-//     assert.true(step.requirement.equals(expected.first()));
-//   }
-//
-//   assert.equals(scheduler.context.movements, 399);
-//
-//   assert.true(scheduler.context.direction);
-//
-//   assert.end();
-// })
-//
-// test('SCAN#run - batch with pagefaults - final context', assert => {
-//     let scheduler = new Scheduler(SCAN, examples.simulation15());
-//     let expected = LotParser(
-//         '*147 133 130 110 *150 *149 175 186 201 202 212 257 270 ' +
-//         '285 288 99 94 85 81 75 59 50 42 25'
-//     );
-//     let results = scheduler.run();
-//
-//     for (let step of results)
-//     {
-//         assert.true(step.requirement.equals(expected.first()));
-//     }
-//
-//     assert.equals(scheduler.context.direction, false);
-//     assert.equals(scheduler.context.movements, 487);
-//     assert.end();
-// })
+  assert.equals(scheduler.context.movements, 433);
+  assert.false(scheduler.context.direction);
+
+  assert.end();
+})
+
+test('SCAN#run - batch with pagefaults - final context', assert => {
+  let scheduler = new Scheduler(SCAN, examples.simulation15());
+  let expected = LotParser(
+    '*147 175 *150 133 *149 186 201 202 212 257 270 285 288 299 ' +
+    '130 110 99 94 85 81 75 59 50 42 25'
+  );
+
+  let results = scheduler.run();
+
+  for (let step of results)
+  {
+    assert.true(step.requirement.equals(expected.first()));
+  }
+
+  assert.equals(scheduler.context.direction, false);
+  assert.equals(scheduler.context.movements, 517);
+  assert.end();
+})
