@@ -1,9 +1,11 @@
 'use strict';
 
-const PageFault = require(`./simulation.js`).PageFault;
-const Requirement = require(`./simulation.js`).Requirement;
-const Edge = require(`./simulation.js`).Edge;
-const Lot = require(`./simulation.js`).Lot;
+const sim_lib     = require('./simulation');
+const PageFault   = sim_lib.PageFault;
+const Requirement = sim_lib.Requirement;
+const Edge        = sim_lib.Edge;
+const Lot         = sim_lib.Lot;
+
 class BaseAlgorithm
 {
 
@@ -71,24 +73,31 @@ class SSTF extends FCFS
 
   className()
   {
-    return 'SSTF'
+    return 'SSTF';
   }
 }
 
-class LOOK extends FCFS
-{
-  // after pf, keeps new direction
-  className()
-  {
-    return 'LOOK'
-  }
-}
+
 class CLOOK extends FCFS
 {
   // after pf, keeps old direction
   className()
   {
-    return 'CLOOK'
+    return 'CLOOK';
+  }
+  static getNextRequirement(context)
+  {
+    let [greater, smaller] = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+
+    if (context.direction)
+    {
+      return greater.closest(context.position, new Edge(context.maxTracks));
+    } else {
+      return smaller.closest(context.position, new Edge(0));
+    }
   }
 }
 
@@ -133,6 +142,31 @@ class SCAN extends FCFS
     return 'SCAN';
   }
 }
+
+class LOOK extends SCAN
+{
+  // after pf, keeps new direction
+  className()
+  {
+    return 'LOOK'
+  }
+
+  static getNextRequirement(context)
+  {
+    let [greater, smaller] = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+
+    if (context.direction)
+    {
+      return greater.closest(context.position, smaller.closest(context.position));
+    } else {
+      return smaller.closest(context.position, greater.closest(context.position));
+    }
+  }
+}
+
 class CSCAN extends FCFS
 {
   // after pf, keeps old direction
