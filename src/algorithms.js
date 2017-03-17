@@ -52,14 +52,6 @@ class BaseAlgorithm
 
 }
 
-const getClosestRequirementFn = (position) => {
-  return (previous, current) => {
-    let abs = Math.abs;
-    return (abs(previous - position) < abs(current - position)) ? previous : current
-  };
-}
-
-
 class FCFS extends BaseAlgorithm
 {
   className()
@@ -74,10 +66,7 @@ class SSTF extends FCFS
 
   static getNextRequirement(context)
   {
-    let position = context.position;
-    return context.unattended.requirements.toArray().reduce(
-      getClosestRequirementFn(position)
-    );
+    return context.unattended.requirements.closest(context.position);
   }
 
   className()
@@ -113,63 +102,31 @@ class SCAN extends FCFS
     let smaller = new Lot();
     for (let req of requirements.toArray())
     {
-      if (req.value > position) {
-        greater.append(req)
-      } else {
-        smaller.append(req)
-      }
+      (req.value > position) ? greater.append(req) : smaller.append(req)
     }
     return {greater, smaller}
   }
 
   static getNextRequirement(context)
   {
-    let splitReqs = this.splitRequirements(
+    let {greater, smaller} = this.splitRequirements(
       context.unattended.requirements,
       context.position
     );
-    if (context.direction) {
-      if (splitReqs.greater.isEmpty())
-      {
-        return new Edge(context.maxTracks);
-      }else{
-        return splitReqs.greater.toArray().reduce(getClosestRequirementFn(context.position))
-      }
+
+    if (context.direction)
+    {
+      return greater.closest(context.position, new Edge(context.maxTracks));
     } else {
-      if (splitReqs.smaller.isEmpty())
-      {
-        return new Edge(0);
-      }else{
-        return splitReqs.smaller.toArray().reduce(getClosestRequirementFn(context.position))
-      }
+      return smaller.closest(context.position, new Edge(0));
     }
   }
-
-  // static countMovements(requirement, context)
-  // {
-  //   let splitReqs = this.splitRequirements(
-  //     context.unattended.requirements,
-  //     context.position
-  //   );
-
-  //   let reqs = context.direction ? splitReqs.greater : splitReqs.smaller;
-
-  //   if (reqs.toArray().length > 0)
-  //   {
-  //     return super.countMovements(requirement, context);
-  //   } else {
-  //     return 0;
-  //   }
-  // }
 
   static getFinalDirection(requirement, context)
   {
     let direction = super.getFinalDirection(requirement, context);
-    if (requirement.edge)
-    {
-      return !direction;
-    }
-    return direction;
+    let finalDirection =
+    return requirement.edge ? !direction : direction;
   }
 
   className()

@@ -19,7 +19,6 @@ test('SCAN#run - single lot - final context', assert => {
 
   let results = scheduler.run();
 
-  console.log(results);
   for (let step of results)
   {
     assert.true(step.requirement.equals(expected.first()));
@@ -34,17 +33,15 @@ test('SCAN#run - single lot - final context', assert => {
 test('SCAN#splitRequirements returns propper object', assert => {
 
   let lot = LotParser('86 147 91 177 94 150 102 175 130 32 120 58 66 115');
-  let greater = LotParser('86 147 91 177 94 150 102 175 130 120 115');
-  let smaller = LotParser('32 58 66');
-  let split = SCAN.splitRequirements(lot, 83);
+  let expected_greater = LotParser('86 147 91 177 94 150 102 175 130 120 115');
+  let expected_smaller = LotParser('32 58 66');
+  let {greater, smaller} = SCAN.splitRequirements(lot, 83);
 
-  assert.equals(typeof split, 'object');
-  assert.equals(typeof split.greater, 'object');
-  assert.equals(typeof split.smaller, 'object');
+  assert.equals(typeof greater, 'object');
+  assert.equals(typeof smaller, 'object');
 
-
-  assert.true(split.greater.equals(greater));
-  assert.true(split.smaller.equals(smaller));
+  assert.true(greater.equals(expected_greater));
+  assert.true(smaller.equals(expected_smaller));
 
   assert.end();
 });
@@ -55,9 +52,10 @@ test('SCAN#splitRequirements returns propper object', assert => {
 //   let context.position = 60;
 //   let split = SCAN.splitRequirements(Lot, 60);
 
-  
+
 //   assert.end();
 // })
+
 // test('SCAN#run - lots batch - final context', assert => {
 //
 //   let scheduler = new Scheduler(SCAN, examples.simulation14());

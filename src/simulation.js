@@ -111,6 +111,17 @@ class Lot
     return this.size() === 0;
   }
 
+  closest(position, default_next)
+  {
+    let abs = Math.abs;
+
+    if (this.isEmpty()) return default_next;
+
+    return this.toArray().reduce((previous, current) => {
+      return (abs(previous - position) < abs(current - position)) ? previous : current
+    })
+  }
+
 }
 
 class Hdd
