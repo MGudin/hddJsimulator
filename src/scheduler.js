@@ -47,6 +47,7 @@ class Scheduler
   {
     this.context.unattended.requirements.remove(step.requirement);
     this.context.direction = step.direction;
+    this.context.originalDir = step.originalDir;
     this.context.position = step.position;
     this.context.movements += step.movements;
     this.context.movementsUntilNextLot -= step.movements;

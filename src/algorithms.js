@@ -24,11 +24,19 @@ class BaseAlgorithm
 
     let direction = this.getFinalDirection(requirement, context);
 
+    if (requirement.isPageFault)
+    {
+      if (context.originalDir === undefined) context.originalDir = context.direction;
+    } else {
+      if (context.originalDir !== undefined) delete context.originalDir;
+    }
+
     return {
       direction,
       requirement,
       movements,
-      position: requirement.valueOf()
+      position: requirement.valueOf(),
+      originalDir: context.originalDir
     }
 
   }
@@ -77,29 +85,6 @@ class SSTF extends FCFS
   }
 }
 
-
-class CLOOK extends FCFS
-{
-  // after pf, keeps old direction
-  className()
-  {
-    return 'CLOOK';
-  }
-  static getNextRequirement(context)
-  {
-    let [greater, smaller] = this.splitRequirements(
-      context.unattended.requirements,
-      context.position
-    );
-
-    if (context.direction)
-    {
-      return greater.closest(context.position, new Edge(context.maxTracks));
-    } else {
-      return smaller.closest(context.position, new Edge(0));
-    }
-  }
-}
 
 class SCAN extends FCFS
 {
@@ -166,6 +151,52 @@ class LOOK extends SCAN
     }
   }
 }
+
+class CLOOK extends LOOK
+{
+  className()
+  {
+    return 'CLOOK';
+  }
+
+
+  static getNextRequirement(context)
+  {
+    let [greater, smaller] = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+
+    let dir = context.originalDir ? context.originalDir : context.direction;
+    let req;
+
+    if (dir) {
+      if (greater.isEmpty()) {
+        req = smaller.closest(0).toEdge();
+      } else {
+        req = greater.closest(context.position);
+      }
+    } else {
+      if (smaller.isEmpty()) {
+        req = greater.closest(context.maxTracks).toEdge();
+      } else {
+        req = smaller.closest(context.position);
+      }
+    }
+    return req;
+  }
+
+  static countMovements(requirement, context)
+  {
+    if (requirement.edge)
+    {
+      return 0;
+    } else {
+      return super.countMovements(requirement, context);
+    }
+  }
+}
+
 
 class CSCAN extends FCFS
 {

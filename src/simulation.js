@@ -20,6 +20,11 @@ class Requirement
   {
     return this.value
   }
+
+  toEdge()
+  {
+    return new Edge(this.value);
+  }
 }
 
 class PageFault extends Requirement
