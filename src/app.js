@@ -1,46 +1,80 @@
 'use strict';
 
-require('babel-polyfill');
+var m, simulation, lot_thingy;
 
-const root_dir = '../';
+document.addEventListener("DOMContentLoaded", function(event) {
 
-const lib_sim = require('./simulation');
-const algorithms = require('./algorithms');
-const scheduler = require('./scheduler');
-const examples = require('./../test/examples');
+    m = libhdd.m;
+    let root = document.querySelector('#app-root')
 
-// var batch = new lib_sim.Lot(
-//   [new lib_sim.Requirement(126),
-//    new lib_sim.Requirement(147),
-//    new lib_sim.Requirement(81),
-//    new lib_sim.Requirement(277),
-//    new lib_sim.Requirement(94),
-//    new lib_sim.Requirement(150),
-//    new lib_sim.Requirement(212),
-//    new lib_sim.Requirement(17),
-//    new lib_sim.Requirement(140),
-//    new lib_sim.Requirement(225),
-//    new lib_sim.Requirement(280),
-//    new lib_sim.Requirement(50),
-//    new lib_sim.Requirement(99),
-//    new lib_sim.Requirement(118),
-//    new lib_sim.Requirement(22),
-//    new lib_sim.Requirement(55)
-//   ]
-// );
+    simulation = new libhdd.Simulation();
 
-// var simulation = new lib_sim.Simulation();
+    let Home = {
+        view: () => {
+            return m('div', [
+                m('a', {href: '#!/load_simulation'}, 'cargar simulacion')
+            ]);
+        }
+    };
 
-// sched.context.unattended.requirements = batch;
+    lot_thingy = {
+        unparsed: '',
+        parse: () => {
+            return libhdd.LotParser(lot_thingy.unparsed);
+        }
+    };
 
-var simulation = examples.simulation12();
-var sched = new scheduler.Scheduler( algorithms.SCAN , simulation);
+    let parse_lot_thingy = (event) => {
+        event.preventDefault();
+        console.log(lot_thingy.parse());
+        return false;
+    }
 
-module.exports = {
-  lib_sim,
-  algorithms,
-  // batch,
-  scheduler,
-  sched,
-  simulation,
-}
+    let SimulationForm = {
+        view: (vnode) => {
+          console.log(vnode);
+            return m('div', [
+                m('form', {onsubmit: parse_lot_thingy},
+                    [
+                        m('.form-group', [
+                            m('label', {for: 'name'}, 'ingrese el nombre para la simulacion'),
+                            m('input#name.form-control', {
+                                type: 'text',
+                                name: 'name',
+                                oninput: m.withAttr('value', value => simulation.name = value),
+                                value: simulation.name
+                            }),
+                            m('label', {for: 'hdd-max-tracks'}, 'ingrese cantidad de pistas del hdd'),
+                            m('input#hdd-max-tracks.form-control', {
+                                type: 'number',
+                                name: 'hdd-max-tracks',
+                                oninput: m.withAttr('value', value => simulation.hdd.tracks = value),
+                                value: simulation.hdd.tracks
+                            }),
+                            m('label', {for: 'lot'}, 'Ingrese requerimientos para el lote'),
+                            m('input#lot.form-control', {
+                                type: 'text',
+                                name: 'lot',
+                                oninput: m.withAttr('value', value => lot_thingy.unparsed = value),
+                                value: lot_thingy.unparsed
+                            }),
+                            m('hr'),
+                            m('.actions.text-right', [
+                                m('button.btn.btn-dark[type=submit]', {onclick: parse_lot_thingy},  'cargar lote')
+                            ])
+                        ])
+                    ]),
+                m('.actions', [
+                    m('a', {href: '#!/'}, 'back')
+                ])
+            ]);
+        }
+    }
+
+    m.route(root, "/",
+        {
+            "/": Home,
+            "/load_simulation": SimulationForm
+        }
+    );
+});

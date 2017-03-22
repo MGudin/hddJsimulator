@@ -148,7 +148,7 @@ class LotsBatch
 
   hasLots()
   {
-    return this.lots.length>0;
+    return this.lots.length > 0;
   }
 
   next()

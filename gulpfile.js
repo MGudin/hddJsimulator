@@ -18,14 +18,14 @@ babelify.configure({presets: ["es2015"]});
 gulp.task('javascript', () => {
 
   var b = browserify({
-    entries: 'src/app.js',
+    entries: 'src/libhdd.js',
     standalone: 'libhdd',
     debug: true,
     transform: [babelify]
   });
 
   return b.bundle()
-    .pipe(source('app.js'))
+    .pipe(source('libhdd.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(uglify())
