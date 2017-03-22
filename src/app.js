@@ -4,43 +4,77 @@ require('babel-polyfill');
 
 const root_dir = '../';
 
-const lib_sim = require('./simulation');
-const algorithms = require('./algorithms');
-const scheduler = require('./scheduler');
-const examples = require('./../test/examples');
+const m                 = require('mithril');
+const lib_sim           = require('./simulation');
+const algorithms        = require('./algorithms');
+const scheduler         = require('./scheduler');
+const examples          = require('./../test/examples');
+const parsers           = require('./parsers');
+const LotParser         = parsers.LotParser;
+const RequirementParser = parsers.RequirementParser;
 
-// var batch = new lib_sim.Lot(
-//   [new lib_sim.Requirement(126),
-//    new lib_sim.Requirement(147),
-//    new lib_sim.Requirement(81),
-//    new lib_sim.Requirement(277),
-//    new lib_sim.Requirement(94),
-//    new lib_sim.Requirement(150),
-//    new lib_sim.Requirement(212),
-//    new lib_sim.Requirement(17),
-//    new lib_sim.Requirement(140),
-//    new lib_sim.Requirement(225),
-//    new lib_sim.Requirement(280),
-//    new lib_sim.Requirement(50),
-//    new lib_sim.Requirement(99),
-//    new lib_sim.Requirement(118),
-//    new lib_sim.Requirement(22),
-//    new lib_sim.Requirement(55)
-//   ]
-// );
+let simulation = examples.simulation12();
+let sched = new scheduler.Scheduler(algorithms.SCAN, simulation);
 
-// var simulation = new lib_sim.Simulation();
+let AppInit = (root) => {
 
-// sched.context.unattended.requirements = batch;
+    let Home = {
+        view: () => {
+            return m('div', [
+                m('a', {href: '#!/load_simulation'}, 'cargar simulacion')
+            ]);
+        }
+    };
 
-var simulation = examples.simulation12();
-var sched = new scheduler.Scheduler( algorithms.SCAN , simulation);
+    var lot_thingy = {
+        unparsed: '',
+        parse: () => LotParser(lot_thingy.unparsed)
+    };
+
+    let SimulationForm = {
+        view: (ctrl) => {
+            return m('div', [
+                m('form', [
+                    m('.form-group', [
+                        m('label', {for: 'lot'}, 'Ingrese requerimientos para el lote'),
+                        m('input#lot.form-control', {
+                            type: 'text',
+                            name: 'lot',
+                            oninput: m.withAttr('value', (value) => lot_thingy.unparsed = value),
+                            value: lot_thingy.unparsed
+                        }),
+                        m('hr'),
+                        m('.actions.text-right', [
+                            m('button.btn.btn-default[type=submit]', {onclick: () => {
+                                console.log(lot_thingy.parse());
+                                return false;
+                            }
+                            }, 'cargar lote')
+                        ])
+                    ])
+                ]),
+                m('.actions', [
+                    m('a', {href: '#!/'}, 'back')
+                ])
+            ]);
+        }
+    }
+
+    m.route(root, "/",
+        {
+            "/": Home,
+            "/load_simulation": SimulationForm
+        }
+    );
+};
+
 
 module.exports = {
-  lib_sim,
-  algorithms,
-  // batch,
-  scheduler,
-  sched,
-  simulation,
+    lib_sim,
+    algorithms,
+    // batch,
+    scheduler,
+    sched,
+    simulation,
+    AppInit
 }
