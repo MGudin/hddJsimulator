@@ -198,13 +198,55 @@ class CLOOK extends LOOK
 }
 
 
-class CSCAN extends FCFS
+class CSCAN extends CLOOK
 {
   // after pf, keeps old direction
   className()
   {
     return 'CSCAN';
   }
+  static getNextRequirement(context)
+    {
+    let [greater, smaller] = this.splitRequirements(
+      context.unattended.requirements,
+      context.position
+    );
+
+    let dir = context.originalDir ? context.originalDir : context.direction;
+    let req;
+      let lastReq = context.attended.at(context.attended.size()-1);
+
+    if (dir) {
+      if (greater.isEmpty()) {
+        if (lastReq.value === context.maxTracks)
+        {
+          req = new Edge(0);
+        }else{
+          req = new Requirement(context.maxTracks);
+        }
+      } else {
+        req = greater.closest(context.position);
+      }
+    } else {
+      if (smaller.isEmpty()) {
+        if (lastReq.value === 0)
+        {
+          req = new Edge(context.maxTracks);
+        }else{
+          req = new Requirement(0);
+        }
+      } else {
+        req = smaller.closest(context.position);
+      }
+    }
+    return req;
+    }
+
+  // static countMovements(requirement, context)
+  // {
+    
+  // }
+  
 }
 
 module.exports = {
