@@ -26,7 +26,11 @@ const LotParser = (lot_str) => {
   // Example:
   //  let lot = LotParser('3 *34'); #=> Lot([Requirement(3), PageFault(34)])
   //==========================================================================
-  return new Lot(lot_str.split(/\s/).map(RequirementParser));
+
+    let clean_data = lot_str.replace(/\s+/g, ' ')
+        .split(/\s/)
+        .filter(v => v.match(/\*?\d+/));
+  return new Lot(clean_data.map(RequirementParser));
 }
 
 module.exports = {
