@@ -12,8 +12,7 @@ class Requirement
 
   equals(other)
   {
-    return this.value === other.value &&
-      this.isPageFault === other.isPageFault
+    return this.toString() === other.toString();
   }
 
   valueOf()
@@ -84,19 +83,7 @@ class Lot
 
   remove(other)
   {
-    let index = 0;
-    let removed = false;
-
-    for (let requirement of this.requirements)
-    {
-      if (other.equals(requirement))
-      {
-        this.requirements.splice(index, 1);
-        removed = true;
-      }
-      index++;
-    }
-    return removed;
+    return this.requirements = this.requirements.filter(req => !req.equals(other));
   }
 
   at(index)
@@ -109,12 +96,7 @@ class Lot
 
     if (this.size() !== other.size()) { return false };
 
-    for (let i = 0, length = this.size(); i < length; i++)
-    {
-      if (! this.at(i).equals(other.at(i))) { return false };
-    }
-
-    return true;
+    return this.toArray().every((req, index) => other.at(index).equals(req));
   }
 
   isEmpty()

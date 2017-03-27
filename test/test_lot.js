@@ -56,12 +56,13 @@ test('Lot#remove actually removes given requirement ', assert => {
   assert.end();
 });
 
-test('Lot#remove returns operation success/failure', assert => {
+test('Lot#remove removes all appearances of given requirement', assert => {
 
-  let lot = LotParser('3 4 *34');
+  let lot = LotParser('3 4 *34 4');
+  let expected = LotParser('3 *34')
 
-  assert.true(lot.remove(new Requirement(4)));
-  assert.false(lot.remove(new Requirement(44)));
+  lot.remove(4)
+  assert.true(lot.equals(expected));
 
    assert.end();
 });
