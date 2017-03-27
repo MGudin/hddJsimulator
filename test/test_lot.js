@@ -123,3 +123,14 @@ test('Lot knows wether its empty or not', assert => {
 
   assert.end();
 });
+
+test('Lot#toString', assert => {
+    let expected = '*55 44 33';
+    let lot = LotParser(expected);
+
+
+    assert.equals((new Lot()).toString(), '');
+    assert.equals(lot.toString(), expected);
+
+    assert.end();
+});

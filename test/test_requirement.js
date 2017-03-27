@@ -42,3 +42,13 @@ test('Requirement doesnt equal other Requirement with different value', assert =
 
   assert.end();
 });
+
+test('Requirement#toString', assert => {
+    let pf  = new PageFault(100);
+    let req = new Requirement(100);
+
+    assert.equals(pf.toString(), '*100');
+    assert.equals(req.toString(), '100');
+
+    assert.end();
+});

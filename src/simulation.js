@@ -25,6 +25,11 @@ class Requirement
   {
     return new Edge(this.value);
   }
+
+  toString()
+  {
+    return `${this.isPageFault ? '*' : ''}${this.value}`;
+  }
 }
 
 class PageFault extends Requirement
@@ -43,6 +48,7 @@ class Edge extends Requirement
     super(value, false, true);
   }
 }
+
 class Lot
 {
 
@@ -125,6 +131,11 @@ class Lot
     return this.toArray().reduce((previous, current) => {
       return (abs(previous - position) < abs(current - position)) ? previous : current
     })
+  }
+
+  toString()
+  {
+    return this.requirements.map((r) => r.toString()).join(' ');
   }
 
 }
