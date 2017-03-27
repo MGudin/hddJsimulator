@@ -1,0 +1,5 @@
+{
+    "preset": "crockford",
+    "esversion": 6,
+    "disallowNewlineBeforeBlockStatements": false
+}

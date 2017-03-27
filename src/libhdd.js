@@ -2,7 +2,7 @@
 
 require('babel-polyfill');
 
-const root_dir      = '../',
+const root_dir        = '../',
     m                 = require('mithril'),
     lib_sim           = require('./simulation'),
     Simulation        = lib_sim.Simulation,

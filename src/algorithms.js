@@ -8,252 +8,238 @@ const Lot         = sim_lib.Lot;
 
 class BaseAlgorithm
 {
-
-  static next(context)
-  {
-    let requirement;
-
-    if (!context.unattended.pageFaults.isEmpty())
+    static next(context)
     {
-      requirement = context.unattended.pageFaults.first();
-    } else {
-      requirement = this.getNextRequirement(context);
+        let requirement;
+
+        if (!context.unattended.pageFaults.isEmpty())
+        {
+            requirement = context.unattended.pageFaults.first();
+        } else {
+            requirement = this.getNextRequirement(context);
+        }
+
+        let movements = this.countMovements(requirement, context);
+
+        let direction = this.getFinalDirection(requirement, context);
+
+        if (requirement.isPageFault)
+        {
+            if (context.originalDir === undefined)
+            {
+                context.originalDir = context.direction;
+            }
+        } else {
+            if (context.originalDir !== undefined)
+            {
+                delete context.originalDir;
+            }
+        }
+
+        return {
+            direction,
+            requirement,
+            movements,
+            position: requirement.valueOf(),
+            originalDir: context.originalDir
+        }
+
     }
 
-    let movements = this.countMovements(requirement, context);
 
-    let direction = this.getFinalDirection(requirement, context);
-
-    if (requirement.isPageFault)
+    static getNextRequirement(context)
     {
-      if (context.originalDir === undefined) context.originalDir = context.direction;
-    } else {
-      if (context.originalDir !== undefined) delete context.originalDir;
+        // to be overwritten by subclasses
+        return context.unattended.requirements.at(0);
     }
 
-    return {
-      direction,
-      requirement,
-      movements,
-      position: requirement.valueOf(),
-      originalDir: context.originalDir
+    static countMovements(requirement, context)
+    {
+        return Math.abs(context.position - requirement.value);
     }
 
-  }
-
-  static getNextRequirement(context)
-  {
-    // to be overwritten by subclasses
-    return context.unattended.requirements.at(0);
-  }
-
-  static countMovements(requirement, context)
-  {
-    let currentPosition = context.position;
-    let attendedRequirement = requirement;
-
-    return Math.abs(currentPosition - attendedRequirement);
-  }
-
-  static getFinalDirection(requirement, context)
-  {
-    return requirement > context.position;
-  }
+    static getFinalDirection(requirement, context)
+    {
+        return requirement > context.position;
+    }
 
 }
 
 class FCFS extends BaseAlgorithm
 {
-  className()
-  {
-    return 'FCFS';
-  }
+    className()
+    {
+        return 'FCFS';
+    }
 }
 
 class SSTF extends FCFS
 {
+    className()
+    {
+        return 'SSTF';
+    }
 
-
-  static getNextRequirement(context)
-  {
-    return context.unattended.requirements.closest(context.position);
-  }
-
-  className()
-  {
-    return 'SSTF';
-  }
+    static getNextRequirement(context)
+    {
+        return context.unattended.requirements.closest(context.position);
+    }
 }
 
 
 class SCAN extends FCFS
 {
-  // after pf, keeps new direction
-  // goes to the edges
-  static splitRequirements(requirements, position)
-  {
-    let greater = new Lot();
-    let smaller = new Lot();
-    for (let req of requirements.toArray())
+    className()
     {
-      (req.value > position) ? greater.append(req) : smaller.append(req)
+        return 'SCAN';
     }
-    return [greater, smaller];
-  }
 
-  static getNextRequirement(context)
-  {
-    let [greater, smaller] = this.splitRequirements(
-      context.unattended.requirements,
-      context.position
-    );
-
-    if (context.direction)
+    static splitRequirements(requirements, position)
     {
-      return greater.closest(context.position, new Edge(context.maxTracks));
-    } else {
-      return smaller.closest(context.position, new Edge(0));
+        let greater = new Lot();
+        let smaller = new Lot();
+        for (let req of requirements.toArray())
+        {
+            (req.value > position) ? greater.append(req) : smaller.append(req)
+        }
+        return [greater, smaller];
     }
-  }
 
-  static getFinalDirection(requirement, context)
-  {
-    let direction = super.getFinalDirection(requirement, context);
-    return requirement.edge ? !direction : direction;
-  }
+    static getNextRequirement(context)
+    {
+        let [greater, smaller] = this.splitRequirements(
+            context.unattended.requirements,
+            context.position
+        );
 
-  className()
-  {
-    return 'SCAN';
-  }
+        if (context.direction)
+        {
+            return greater.closest(context.position, new Edge(context.maxTracks));
+        } else {
+            return smaller.closest(context.position, new Edge(0));
+        }
+    }
+
+    static getFinalDirection(requirement, context)
+    {
+        let direction = super.getFinalDirection(requirement, context);
+        return requirement.edge ? !direction : direction;
+    }
 }
 
 class LOOK extends SCAN
 {
-  // after pf, keeps new direction
-  className()
-  {
-    return 'LOOK'
-  }
-
-  static getNextRequirement(context)
-  {
-    let [greater, smaller] = this.splitRequirements(
-      context.unattended.requirements,
-      context.position
-    );
-
-    if (context.direction)
+    className()
     {
-      return greater.closest(context.position, smaller.closest(context.position));
-    } else {
-      return smaller.closest(context.position, greater.closest(context.position));
+        return 'LOOK'
     }
-  }
+
+    static getNextRequirement(context)
+    {
+        let [greater, smaller] = this.splitRequirements(
+            context.unattended.requirements,
+            context.position
+        );
+
+        if (context.direction)
+        {
+            return greater.closest(context.position, smaller.closest(context.position));
+        } else {
+            return smaller.closest(context.position, greater.closest(context.position));
+        }
+    }
 }
 
 class CLOOK extends LOOK
 {
-  className()
-  {
-    return 'CLOOK';
-  }
-
-
-  static getNextRequirement(context)
-  {
-    let [greater, smaller] = this.splitRequirements(
-      context.unattended.requirements,
-      context.position
-    );
-
-    let dir = context.originalDir ? context.originalDir : context.direction;
-    let req;
-
-    if (dir) {
-      if (greater.isEmpty()) {
-        req = smaller.closest(0).toEdge();
-      } else {
-        req = greater.closest(context.position);
-      }
-    } else {
-      if (smaller.isEmpty()) {
-        req = greater.closest(context.maxTracks).toEdge();
-      } else {
-        req = smaller.closest(context.position);
-      }
-    }
-    return req;
-  }
-
-  static countMovements(requirement, context)
-  {
-    if (requirement.edge)
+    className()
     {
-      return 0;
-    } else {
-      return super.countMovements(requirement, context);
+        return 'CLOOK';
     }
-  }
+
+    static getNextRequirement(context)
+    {
+        let [greater, smaller] = this.splitRequirements(
+            context.unattended.requirements,
+            context.position
+        );
+
+        let dir = context.originalDir ? context.originalDir : context.direction;
+        let req;
+
+        if (dir) {
+            if (greater.isEmpty()) {
+                req = smaller.closest(0).toEdge();
+            } else {
+                req = greater.closest(context.position);
+            }
+        } else {
+            if (smaller.isEmpty()) {
+                req = greater.closest(context.maxTracks).toEdge();
+            } else {
+                req = smaller.closest(context.position);
+            }
+        }
+        return req;
+    }
+
+    static countMovements(requirement, context)
+    {
+        return requirement.edge ? 0 : super.countMovements(requirement, context);
+    }
 }
 
 
 class CSCAN extends CLOOK
 {
-  // after pf, keeps old direction
-  className()
-  {
-    return 'CSCAN';
-  }
-  static getNextRequirement(context)
+    className()
     {
-    let [greater, smaller] = this.splitRequirements(
-      context.unattended.requirements,
-      context.position
-    );
-
-    let dir = context.originalDir ? context.originalDir : context.direction;
-    let req;
-      let lastReq = context.attended.at(context.attended.size()-1);
-
-    if (dir) {
-      if (greater.isEmpty()) {
-        if (lastReq.value === context.maxTracks)
-        {
-          req = new Edge(0);
-        }else{
-          req = new Requirement(context.maxTracks);
-        }
-      } else {
-        req = greater.closest(context.position);
-      }
-    } else {
-      if (smaller.isEmpty()) {
-        if (lastReq.value === 0)
-        {
-          req = new Edge(context.maxTracks);
-        }else{
-          req = new Requirement(0);
-        }
-      } else {
-        req = smaller.closest(context.position);
-      }
-    }
-    return req;
+        return 'CSCAN';
     }
 
-  // static countMovements(requirement, context)
-  // {
-    
-  // }
-  
+    static getNextRequirement(context)
+    {
+        let [greater, smaller] = this.splitRequirements(
+            context.unattended.requirements,
+            context.position
+        );
+
+        let dir = context.originalDir ? context.originalDir : context.direction;
+        let lastReq = context.attended.at(context.attended.size() - 1);
+        let nextReq;
+
+        if (dir) {
+            if (greater.isEmpty()) {
+                if (lastReq.value === context.maxTracks)
+                {
+                    nextReq = new Edge(0);
+                } else {
+                    nextReq = new Requirement(context.maxTracks);
+                }
+            } else {
+                nextReq = greater.closest(context.position);
+            }
+        } else {
+            if (smaller.isEmpty()) {
+                if (lastReq.value === 0)
+                {
+                    nextReq = new Edge(context.maxTracks);
+                } else {
+                    nextReq = new Requirement(0);
+                }
+            } else {
+                nextReq = smaller.closest(context.position);
+            }
+        }
+        return nextReq;
+    }
 }
 
 module.exports = {
-  FCFS,
-  SSTF,
-  LOOK,
-  CLOOK,
-  SCAN,
-  CSCAN
+    FCFS,
+    SSTF,
+    LOOK,
+    CLOOK,
+    SCAN,
+    CSCAN
 }
