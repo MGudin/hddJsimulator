@@ -1,6 +1,13 @@
-var Hdd = require('../simulation').Hdd;
-
-var hdd = new Hdd();
+var hdd = {
+  name: "",
+  tracks:512,
+  setTracks: (value) => {
+    hdd.tracks = Number(value);
+  },
+  setName: (value) => {
+    hdd.name = value
+  }
+};
 
 module.exports={
   hdd,

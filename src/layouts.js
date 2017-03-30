@@ -10,6 +10,7 @@ var simulationWidget = require('./components/simulation').simulationWidget;
 var Lot = require('./simulation').Lot;
 var Batch = require('./simulation').LotsBatch;
 var Sim = require('./simulation').Simulation;
+var Hdd = require('./simulation').Hdd;
 var algorithms = require('./algorithms');
 var Scheduler = require('./scheduler').Scheduler;
 
@@ -47,19 +48,20 @@ var SimulationForm = {
           m('.actions.text-right', [
             m('button.btn.btn-default[type=button]', {
               onclick: () => {
-                let h = hdd;
-                let b = new Batch([
+                var h = new Hdd(hdd);
+                var b = new Batch([
                   {lot: lot.parse(),
                    movementsUntilNextLot: 0}
-                  ]);
-                let s = new Sim({
+                ]);
+                var s = new Sim({
                   direction: simulation.direction,
                   position: simulation.position,
                   hdd: h,
                   lotsBatch: b
                 });
-                let a = eval("algorithms."+algorithm.algorithm);
-                let scheduler = new Scheduler(a,s);
+                var a = eval("algorithms."+algorithm.algorithm);
+                var scheduler = new Scheduler(a,s);
+                console.log(scheduler.run());
               }
             }, 'simular')
           ]),

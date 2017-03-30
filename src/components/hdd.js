@@ -23,7 +23,7 @@ var hddWidget = {
           { id: "hdd-tracks",
             type: "number",
             value: hdd.tracks,
-            oninput: m.withAttr("value", (value) => hdd.tracks = Number(value))}
+            oninput: m.withAttr("value", hdd.setTracks)}
          )
       ])
     ]
