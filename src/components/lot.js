@@ -1,7 +1,7 @@
 var m = require('mithril')
 var lot = require('../models/lot').lot;
 
-var lotInputWidget = {
+var lotInputForm = {
   view: () => {
     return [
       m('label',
@@ -18,6 +18,6 @@ var lotInputWidget = {
 }
 
 module.exports={
-  lotInputWidget,
+  lotInputForm,
   lot,
 }

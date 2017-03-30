@@ -2,7 +2,7 @@ var m = require("mithril");
 
 var hdd = require('../models/hdd').hdd;
 
-var hddWidget = {
+var hddForm = {
   view : (vnode) => {
     return [
       m(".form-group",[
@@ -31,6 +31,6 @@ var hddWidget = {
 }
 
 module.exports = {
-  hddWidget,
+  hddForm,
   hdd,
 }

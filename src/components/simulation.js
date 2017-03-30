@@ -1,7 +1,7 @@
 var m = require('mithril');
 var simulation = require('../models/simulation').simulation;
 
-var simulationWidget = {
+var simulationForm = {
   oninit: (vnode) => {
     vnode.attrs.right = "checked";
   },
@@ -52,5 +52,5 @@ var simulationWidget = {
 }
 
 module.exports = {
-  simulationWidget,
+  simulationForm,
 }

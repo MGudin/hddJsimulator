@@ -21,7 +21,7 @@ var radioInputWidget = {
   }
 }
 
-var algorithmsWidget = {
+var algorithmsForm = {
   
   view: (vnode) => {
     return [
@@ -41,6 +41,6 @@ var algorithmsWidget = {
 }
 
 module.exports = {
-  algorithmsWidget,
+  algorithmsForm,
   algorithm,
 }

@@ -1,10 +1,10 @@
 const m = require('mithril')
 
-var batchWidget = require('./components/batch').batchWidget;
-var lotInputWidget = require('./components/lot').lotInputWidget;
-var hddWidget = require('./components/hdd').hddWidget;
-var algorithmsWidget = require('./components/algorithms').algorithmsWidget;
-var simulationWidget = require('./components/simulation').simulationWidget;
+var batchForm = require('./components/batch').batchForm;
+var lotInputForm = require('./components/lot').lotInputForm;
+var hddForm = require('./components/hdd').hddForm;
+var algorithmsForm = require('./components/algorithms').algorithmsForm;
+var simulationForm = require('./components/simulation').simulationForm;
 
 // lib
 var Lot = require('./simulation').Lot;
@@ -35,14 +35,14 @@ var SimulationForm = {
       m('form', [
         m('.row',[
           m('.col-md-6', [
-            m(hddWidget)
+            m(hddForm)
           ]),
           m('.col-md-6', [
-            m(simulationWidget),
+            m(simulationForm),
           ])
         ]), // closes row 1
         m('.row', [
-          m(batchWidget),
+          m(batchForm),
           // m(algorithmsWidget),
           m('hr'),
           m('.actions.text-right', [

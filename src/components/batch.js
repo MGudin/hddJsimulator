@@ -1,9 +1,9 @@
 var m = require('mithril')
 
-var lotInputWidget = require('./lot').lotInputWidget;
+var lotInputForm = require('./lot').lotInputForm;
 
 var batchModel = {
-  batch:[m(lotInputWidget)],
+  batch:[m(lotInputForm)],
   addLot: (lotInput) => {
     // console.log(batchModel.batch);
     batchModel.batch.push(lotInput);
@@ -11,9 +11,9 @@ var batchModel = {
 }
 
 
-var batchWidget = {
+var batchForm = {
   oninit: (vnode) => {
-    vnode.attrs.lotInput = m(lotInputWidget)
+    vnode.attrs.lotInput = m(lotInputForm)
   },
   view: (vnode) => {
     return m(".form-group",[
@@ -22,9 +22,9 @@ var batchWidget = {
       // m("p.btn.btn-default", 
       //   {
           // lotInput: "un lote",
-          // lotInput: m(lotInputWidget),
+          // lotInput: m(lotInputForm),
           // onclick: () => {m.withAttr('lotInput', batchModel.addLot); m.redraw()}
-          // onclick: () => {vnode.children.push(m(lotInputWidget)); console.log(vnode); vnode.children.map(()=>{m.redraw()})}
+          // onclick: () => {vnode.children.push(m(lotInputForm)); console.log(vnode); vnode.children.map(()=>{m.redraw()})}
         // })
       //   "agregar lote")
     ])
@@ -32,5 +32,5 @@ var batchWidget = {
 }
 
 module.exports={
-  batchWidget,
+  batchForm,
 }
