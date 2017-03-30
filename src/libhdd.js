@@ -10,8 +10,8 @@ const root_dir        = '../',
       Scheduler         = require('./scheduler').Scheduler,
       examples          = require('./../test/examples'),
       parsers           = require('./parsers'),
-      LotParser         = parsers.LotParser,
-      RequirementParser = parsers.RequirementParser,
+      Lot.fromString         = parsers.Lot.fromString,
+      Requirement.fromString = parsers.Requirement.fromString,
       layouts           = require('./layouts');
 
 
@@ -23,7 +23,7 @@ module.exports = {
   examples,
   Scheduler,
   Simulation,
-  LotParser,
-  RequirementParser,
+  Lot.fromString,
+  Requirement.fromString,
   layouts
 }

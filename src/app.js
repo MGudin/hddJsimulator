@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     lot_thingy = {
         unparsed: '',
         parse: () => {
-            return libhdd.LotParser(lot_thingy.unparsed);
+            return libhdd.Lot.fromString(lot_thingy.unparsed);
         }
     };
 

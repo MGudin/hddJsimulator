@@ -29,6 +29,24 @@ class Requirement
     {
         return `${this.isPageFault ? '*' : ''}${this.value}`;
     }
+
+    toJson()
+    {
+        return this.toString();
+    }
+
+    static fromString(req_str)
+    {
+        return new Requirement(
+            parseInt(req_str.replace(/\W/, '')),
+            !!req_str.match(/\*\d+/)
+        );
+    }
+
+    static fromJson(json)
+    {
+        return Lot.fromString(json);
+    }
 }
 
 class PageFault extends Requirement
@@ -117,7 +135,25 @@ class Lot
 
     toString()
     {
-        return this.requirements.map((r) => r.toString()).join(' ');
+        return this.toArray().map((r) => r.toString()).join(' ');
+    }
+
+    toJson()
+    {
+        return this.toArray().map(req => req.toJson());
+    }
+
+    static fromString(lot_str)
+    {
+        let clean_data = lot_str.replace(/\s+/g, ' ')
+            .split(/\s/)
+            .filter(v => v.match(/\*?\d+/));
+        return new Lot(clean_data.map(Requirement.fromString));
+    }
+
+    static fromJson(json)
+    {
+        return new Lot(json.map(req_str => Requirement.fromString(req_str)));
     }
 
 }
@@ -154,6 +190,37 @@ class LotsBatch
     next()
     {
         return this.lots.shift();
+    }
+
+    lotHolderToJson(lot_holder)
+    {
+        return {
+            lot: lot_holder.lot.toJson(),
+            movementsUntilNextLot: lot_holder.movementsUntilNextLot
+        }
+    }
+
+    toJson()
+    {
+        return {
+            lots: this.lots.map(lot_holder => this.lotHolderToJson(lot_holder))
+        };
+    }
+
+    static lotHolderFromJson(lot_holder_data)
+    {
+        return {
+            lot: Lot.fromJson(lot_holder_data.lot),
+            movementsUntilNextLot: lot_holder_data.movementsUntilNextLot
+        }
+    }
+
+
+    static fromJson(json)
+    {
+        return new LotsBatch(
+            json.lots.map(lot_data => LotsBatch.lotHolderFromJson(lot_data))
+        )
     }
 }
 

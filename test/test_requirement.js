@@ -52,3 +52,13 @@ test('Requirement#toString', assert => {
 
     assert.end();
 });
+
+test('Requirement#toJson', assert => {
+    let pf  = new PageFault(100);
+    let req = new Requirement(100);
+
+    assert.equals(pf.toJson(), '*100');
+    assert.equals(req.toJson(), '100');
+
+    assert.end();
+});
