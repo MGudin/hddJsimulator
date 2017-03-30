@@ -42,9 +42,10 @@ gulp.task('default', () => {
     }
   });
 
-  watch('src/*.js', () => {
-    gulp.start('javascript');
-    browserSync.reload();
+  watch(['src/*.js', 'src/**/*.js'],
+        () => {
+          gulp.start('javascript');
+          browserSync.reload();
   });
 
   watch('test/examples.js', () => {

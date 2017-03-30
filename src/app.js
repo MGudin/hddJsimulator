@@ -16,49 +16,11 @@ const RequirementParser = parsers.RequirementParser;
 let simulation = examples.simulation12();
 let sched = new scheduler.Scheduler(algorithms.SCAN, simulation);
 
+// application imports
+var Home = require('./components/home').Home;
+var SimulationForm = require('./components/simulation_form').SimulationForm;
+
 let AppInit = (root) => {
-
-    let Home = {
-        view: () => {
-            return m('div', [
-                m('a', {href: '#!/load_simulation'}, 'cargar simulacion')
-            ]);
-        }
-    };
-
-    var lot_thingy = {
-        unparsed: '',
-        parse: () => LotParser(lot_thingy.unparsed)
-    };
-
-    let SimulationForm = {
-        view: (ctrl) => {
-            return m('div', [
-                m('form', [
-                    m('.form-group', [
-                        m('label', {for: 'lot'}, 'Ingrese requerimientos para el lote'),
-                        m('input#lot.form-control', {
-                            type: 'text',
-                            name: 'lot',
-                            oninput: m.withAttr('value', (value) => lot_thingy.unparsed = value),
-                            value: lot_thingy.unparsed
-                        }),
-                        m('hr'),
-                        m('.actions.text-right', [
-                            m('button.btn.btn-default[type=submit]', {onclick: () => {
-                                console.log(lot_thingy.parse());
-                                return false;
-                            }
-                            }, 'cargar lote')
-                        ])
-                    ])
-                ]),
-                m('.actions', [
-                    m('a', {href: '#!/'}, 'back')
-                ])
-            ]);
-        }
-    }
 
     m.route(root, "/",
         {
