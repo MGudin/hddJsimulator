@@ -4,6 +4,7 @@ var algorithm = require('../models/algorithm').algorithm;
 
 var radioInputWidget = {
 
+  
   view: (vnode) => {
 
     return m('.radio-inline',
