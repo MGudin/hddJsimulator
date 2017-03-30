@@ -17,6 +17,7 @@ var Scheduler = require('./scheduler').Scheduler;
 var hdd = require('./models/hdd').hdd;
 var algorithm = require('./models/algorithm').algorithm;
 var simulation = require('./models/simulation').simulation;
+var lot = require('./models/lot').lot;
 
 var Home = {
   view: () => {
@@ -41,7 +42,7 @@ var SimulationForm = {
         ]), // closes row 1
         m('.row', [
           m(batchWidget),
-          m(algorithmsWidget),
+          // m(algorithmsWidget),
           m('hr'),
           m('.actions.text-right', [
             m('button.btn.btn-default[type=button]', {
@@ -57,15 +58,8 @@ var SimulationForm = {
                   hdd: h,
                   lotsBatch: b
                 });
-                // let a = eval("new algorithms." + algorithm.algorithm + "()");
                 let a = eval("algorithms."+algorithm.algorithm);
                 let scheduler = new Scheduler(a,s);
-                console.log(scheduler.run());
-                // let b = batch
-                // console.log(lot_thingy.parse());
-                // batch.lots = lot.parse();
-                // console.log(simulation);
-                // return false;
               }
             }, 'simular')
           ]),
