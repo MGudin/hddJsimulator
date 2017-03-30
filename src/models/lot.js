@@ -1,4 +1,4 @@
-var Lot.fromString = require('../parsers').Lot.fromString
+var Lot = require('../simulation').Lot;
 
 var lot  = {
   unparsed: '',

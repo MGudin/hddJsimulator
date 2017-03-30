@@ -9,9 +9,6 @@ const root_dir        = '../',
       algorithms        = require('./algorithms'),
       Scheduler         = require('./scheduler').Scheduler,
       examples          = require('./../test/examples'),
-      parsers           = require('./parsers'),
-      Lot.fromString         = parsers.Lot.fromString,
-      Requirement.fromString = parsers.Requirement.fromString,
       layouts           = require('./layouts');
 
 
@@ -23,7 +20,5 @@ module.exports = {
   examples,
   Scheduler,
   Simulation,
-  Lot.fromString,
-  Requirement.fromString,
   layouts
 }
