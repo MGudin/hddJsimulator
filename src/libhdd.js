@@ -9,9 +9,6 @@ const root_dir        = '../',
       algorithms        = require('./algorithms'),
       Scheduler         = require('./scheduler').Scheduler,
       examples          = require('./../test/examples'),
-      parsers           = require('./parsers'),
-      LotParser         = parsers.LotParser,
-      RequirementParser = parsers.RequirementParser,
       layouts           = require('./layouts');
 
 
@@ -23,7 +20,5 @@ module.exports = {
   examples,
   Scheduler,
   Simulation,
-  LotParser,
-  RequirementParser,
   layouts
 }

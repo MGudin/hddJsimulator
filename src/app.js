@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     simulation = new libhdd.Simulation();
 
-
     m.route(root, "/",
         {
             "/": libhdd.layouts.Home,

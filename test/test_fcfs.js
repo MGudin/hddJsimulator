@@ -9,9 +9,7 @@ const Lot         = require(`${root_dir}src/simulation.js`).Lot;
 const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
 const LotsBatch   = require(`${root_dir}src/simulation.js`).LotsBatch;
 const Hdd         = require(`${root_dir}src/simulation.js`).Hdd;
-const parsers     = require(`${root_dir}src/parsers.js`);
 const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const LotParser   = parsers.LotParser;
 const examples    = require('./examples.js');
 
 
@@ -102,8 +100,8 @@ test('FCFS test returned state is correct (without page faults)', assert => {
 test('FCFS#run - single lot - final context', assert => {
 
   let scheduler = SimpleScheduler()
-  let lot = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
-  let expected = LotParser('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  let lot = Lot.fromString('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
+  let expected = Lot.fromString('126 147 81 277 94 150 212 17 140 225 280 50 99 118 22 55');
 
   scheduler.context.unattended.requirements = lot
 
@@ -123,7 +121,7 @@ test('FCFS#run - single lot - final context', assert => {
 test('FCFS#run - lots batch - final context', assert => {
 
   let scheduler = new Scheduler(FCFS, examples.simulation14());
-  let expected = LotParser('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55 75 115 220 266');
+  let expected = Lot.fromString('126 147 81 277 94 150 212 175 140 225 280 50 99 118 22 55 75 115 220 266');
 
   let results = scheduler.run();
   for (const step of results)
@@ -143,7 +141,7 @@ test('FCFS#run - single lot with page faults - final context', assert => {
 
   let lotBatch = new LotsBatch(
     [
-      { lot: LotParser('126 147 *81 277 94 150 212 17 *140 *225 280 50 99 118 22 55') }
+      { lot: Lot.fromString('126 147 *81 277 94 150 212 17 *140 *225 280 50 99 118 22 55') }
     ]
   );
 
@@ -158,7 +156,7 @@ test('FCFS#run - single lot with page faults - final context', assert => {
 
   let scheduler = new Scheduler(FCFS, simulation);
 
-  let expected = LotParser('*81 *140 *225 126 147 277 94 150 212 17 280 50 99 118 22 55');
+  let expected = Lot.fromString('*81 *140 *225 126 147 277 94 150 212 17 280 50 99 118 22 55');
 
 
 
@@ -176,7 +174,7 @@ test('FCFS#run - single lot with page faults - final context', assert => {
 
 test('FCFS#run - batch with pagefaults - final context', assert => {
   let scheduler = new Scheduler(FCFS, examples.simulation15());
-  let expected = LotParser('*147 99 *150 *149 110 42 25 186 270 50 81 257 94 133 212 175 130 85 202 288 75 285 201 59')
+  let expected = Lot.fromString('*147 99 *150 *149 110 42 25 186 270 50 81 257 94 133 212 175 130 85 202 288 75 285 201 59')
   let results = scheduler.run();
 
   for (let step of results)

@@ -11,8 +11,6 @@ const LotsBatch   = lib_sim.LotsBatch;
 const Requirement = lib_sim.Requirement;
 const PageFault   = lib_sim.PageFault;
 const Lot         = lib_sim.Lot;
-const parsers     = require(`${root_dir}src/parsers.js`);
-const LotParser   = parsers.LotParser;
 
 
 function SimpleScheduler() {
@@ -127,8 +125,8 @@ test('Scheduler#updateContext', assert => {
 
 test('Scheduler#updateContext merges lots when movementsUntilNextLot smaller = 0', assert => {
   let lotsBatch = new LotsBatch([
-    {movementsUntilNextLot: 3, lot: LotParser('45 45')},
-    {movementsUntilNextLot: 0, lot: LotParser('45 45')},
+    {movementsUntilNextLot: 3, lot: Lot.fromString('45 45')},
+    {movementsUntilNextLot: 0, lot: Lot.fromString('45 45')},
   ]);
   let scheduler  = SimpleScheduler();
   let step = {
@@ -149,7 +147,7 @@ test('Scheduler#updateContext merges lots when movementsUntilNextLot smaller = 0
 
 test('Scheduler#mergeLot updates unattended lots', assert => {
 
-  let nextLot = {lot: LotParser('3 4 5 *3 *4'), movementsUntilNextLot: 100};
+  let nextLot = {lot: Lot.fromString('3 4 5 *3 *4'), movementsUntilNextLot: 100};
   let scheduler = SimpleScheduler();
   scheduler.mergeLot(nextLot)
 
@@ -160,7 +158,7 @@ test('Scheduler#mergeLot updates unattended lots', assert => {
 })
 
 test('Scheduler#mergeLot updates movementsUntilNextLot', assert => {
-  let nextLot = { lot: LotParser('3 4 5'), movementsUntilNextLot: 100 }
+  let nextLot = { lot: Lot.fromString('3 4 5'), movementsUntilNextLot: 100 }
 
   let scheduler = SimpleScheduler();
   scheduler.mergeLot(nextLot)
@@ -209,6 +207,6 @@ test('Scheduler#hasUnnatendedReqs', assert => {
   // finally remove requirement from unnatended. test third case
   scheduler.context.unattended.requirements.first();
   assert.equals(scheduler.hasUnattendedReqs(), true);
-  
+
   assert.end();
 })

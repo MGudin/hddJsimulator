@@ -1,11 +1,11 @@
-var LotParser = require('../parsers').LotParser
+var Lot = require('../simulation').Lot;
 
 var lot  = {
   unparsed: '',
   setUnparsed: (string) => {
     lot.unparsed = string
   },
-  parse: () => LotParser(lot.unparsed)
+  parse: () => Lot.fromString(lot.unparsed)
 };
 
 module.exports={

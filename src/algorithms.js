@@ -1,10 +1,11 @@
 'use strict';
 
-const sim_lib     = require('./simulation');
-const PageFault   = sim_lib.PageFault;
-const Requirement = sim_lib.Requirement;
-const Edge        = sim_lib.Edge;
-const Lot         = sim_lib.Lot;
+const {
+    PageFault,
+    Requirement,
+    Edge,
+    Lot,
+}     = require('./simulation');
 
 class BaseAlgorithm
 {
