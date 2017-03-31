@@ -26,6 +26,15 @@ class Hdd
         return this;
     }
 
+    static fromJson(json)
+    {
+        return new Hdd(json);
+    }
+
+    static fromString(json_str)
+    {
+        return Hdd.fromJson(JSON.parse(json_str));
+    }
 }
 
 export default Hdd;
