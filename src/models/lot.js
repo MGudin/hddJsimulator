@@ -1,4 +1,4 @@
-var Lot = require('../simulation').Lot;
+var Lot = require('../lot');
 
 var lot  = {
   unparsed: '',
@@ -6,6 +6,7 @@ var lot  = {
     lot.unparsed = string
   },
   parse: () => Lot.fromString(lot.unparsed)
+  
 };
 
 module.exports={

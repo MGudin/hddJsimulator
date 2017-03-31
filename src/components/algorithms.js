@@ -1,20 +1,21 @@
 var m = require('mithril');
 
 var algorithm = require('../models/algorithm').algorithm;
-
+var scheduler = require('../models/scheduler');
+var s;
 var buttonWidget = {
-
-  
   view: (vnode) => {
-
     return m('button.btn.btn-default',
              {  type: "button",
                 // name: "algorithm",
                 value: vnode.attrs.value,
                 // onclick: m.withAttr('value', algorithm.setAlgorithm)
-                onclick: () => {
+                onmousedown: () => {
                   algorithm.setAlgorithm(vnode.attrs.value);
-                  console.log(algorithm.algorithm);
+                  s = scheduler.construct();
+                },
+                onmouseup: () => {
+                  console.log(s.run());
                 }
              },
              vnode.attrs.label)
@@ -22,9 +23,6 @@ var buttonWidget = {
 }
 
 var algorithmButtons = {
-  onupdate: () => {
-    console.log(algorithm);
-  },
   view: (vnode) => {
     return [
       m('.form-group',[
