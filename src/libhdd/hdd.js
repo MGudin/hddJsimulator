@@ -15,6 +15,17 @@ class Hdd
         // Updates default values with params
         Object.assign(this, params)
     }
+
+    toString()
+    {
+        return JSON.stringify(this.toJson());
+    }
+
+    toJson()
+    {
+        return this;
+    }
+
 }
 
 export default Hdd;

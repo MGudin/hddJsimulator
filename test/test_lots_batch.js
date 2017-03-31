@@ -59,6 +59,5 @@ test('LotsBatch#fromJson without `movementsUntilNextLot`', assert => {
     let parsed_batch = LotsBatch.fromJson(batch.toJson());
 
     assert.equals(expected, str(parsed_batch.toJson()));
-    console.log(expected)
     assert.end();
 });
