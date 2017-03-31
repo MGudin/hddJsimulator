@@ -6,13 +6,14 @@
     "serve": "webpack-dev-server"
   },
   "devDependencies": {
+    "babel-tape-runner": "^2.0.1",
+    "babel-preset-es2015": "^6.24.0",
     "faucet": "0.0.1",
     "tape": "^4.6.0",
-    "webpack": "^2.3.2",
-    "webpack-dev-server": "^2.4.2",
-    "babel-tape-runner": "^2.0.1"
+    "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "webpack": "^2.3.2",
     "bootstrap": "^3.3.7",
     "mithril": "^1.0.1"
   }

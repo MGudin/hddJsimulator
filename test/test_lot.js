@@ -3,6 +3,8 @@
 import test from 'tape';
 import {Lot, Requirement, PageFault} from '../src/libhdd';
 
+const str = json => JSON.stringify(json) ;
+
 test('Lot objects can be compared', assert => {
 
     let lot  = new Lot([new Requirement(2)]);
@@ -132,13 +134,13 @@ test('Lot#toString', assert => {
 
 test('Lot#toJson', assert => {
 
-    let expected  = JSON.stringify(['*55', '44', '33']);
+    let expected  = str(['*55', '44', '33']);
     let non_empty_lot       = Lot.fromString('*55 44 33');
     let empty_lot = new Lot();
 
 
-    assert.equals(JSON.stringify(empty_lot.toJson()), '[]');
-    assert.equals(JSON.stringify(non_empty_lot.toJson()), expected);
+    assert.equals(str(empty_lot.toJson()), '[]');
+    assert.equals(str(non_empty_lot.toJson()), expected);
 
     assert.end();
 });
