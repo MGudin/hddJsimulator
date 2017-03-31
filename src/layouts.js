@@ -67,7 +67,7 @@ var SimulationForm = {
           ]),
         ]) // close row 2
       ]),// closes form
-      
+
       m('.actions', [
         m('a', {href: '#!/'}, 'back')
       ])

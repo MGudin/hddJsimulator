@@ -1,14 +1,15 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const CSCAN        = require(`${root_dir}src/algorithms.js`).CSCAN;
-const lib_sim     = require(`${root_dir}src/simulation.js`);
-const PageFault   = lib_sim.PageFault;
-const Requirement = lib_sim.Requirement;
-const Lot         = lib_sim.Lot;
-const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const examples    = require('./examples');
+import test from 'tape';
+import {
+    Lot,
+    PageFault,
+    Requirement,
+    Scheduler,
+    algorithms
+} from '../src/libhdd';
+import examples from './examples';
+const CSCAN = algorithms.CSCAN;
 
 test('CSCAN#run - single lot - final context', assert => {
 
@@ -17,7 +18,6 @@ test('CSCAN#run - single lot - final context', assert => {
 
 
   let results = scheduler.run();
-  console.log(results);
   for (let step of results)
   {
 

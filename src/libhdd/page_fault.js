@@ -1,6 +1,6 @@
 'use strict';
 
-const Requirement = require('./requirement');
+import Requirement from './requirement';
 
 class PageFault extends Requirement
 {
@@ -10,4 +10,4 @@ class PageFault extends Requirement
     }
 }
 
-module.exports = PageFault;
+export default PageFault;

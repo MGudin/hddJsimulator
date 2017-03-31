@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "test": "babel-tape-runner \"test/test*.js\" | faucet"
+    "test": "babel-tape-runner \"test/test*.js\" | faucet",
+    "build": "webpack",
+    "watch": "npm run build -- --watch"
   },
   "devDependencies": {
     "babel-polyfill": "^6.13.0",
@@ -26,6 +28,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "mithril": "^1.0.1"
+    "mithril": "^1.0.1",
+    "webpack": "^2.3.2"
   }
 }

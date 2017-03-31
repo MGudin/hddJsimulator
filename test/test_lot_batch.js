@@ -1,10 +1,7 @@
 'use strict';
 
-const root_dir  = '../'
-const test      = require('tape');
-const sim_lib   = require(`${root_dir}src/simulation.js`);
-const Lot       = sim_lib.Lot;
-const LotsBatch = sim_lib.LotsBatch;
+import test from 'tape';
+import {Lot, LotsBatch} from '../src/libhdd';
 
 test('LotsBatch#toJson on empty batch', assert => {
     let expected  = '{"lots":[]}';

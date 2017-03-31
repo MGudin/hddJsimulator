@@ -1,14 +1,17 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const LOOK        = require(`${root_dir}src/algorithms.js`).LOOK;
-const lib_sim     = require(`${root_dir}src/simulation.js`);
-const PageFault   = lib_sim.PageFault;
-const Requirement = lib_sim.Requirement;
-const Lot         = lib_sim.Lot;
-const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const examples    = require('./examples');
+import test from 'tape';
+import {
+    Lot,
+    PageFault,
+    Requirement,
+    Scheduler,
+    algorithms
+} from '../src/libhdd';
+import examples from './examples';
+
+const LOOK = algorithms.LOOK;
+
 
 test('LOOK#run - single lot - final context', assert => {
 

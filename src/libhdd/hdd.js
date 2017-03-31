@@ -17,4 +17,4 @@ class Hdd
     }
 }
 
-module.exports = Hdd;
+export default Hdd;

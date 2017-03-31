@@ -1,10 +1,10 @@
 'use strict';
 
-var m, simulation, lot_thingy;
+var sim = new libhdd.Simulation();
+var simulation, lot_thingy;
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    m = libhdd.m;
     let root = document.querySelector('#app-root')
 
     simulation = new libhdd.Simulation();
