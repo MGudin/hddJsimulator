@@ -3,11 +3,11 @@ var webpack = require('webpack');
 
 libhdd = {
     entry: './src/libhdd/index.js',
-    devtool: 'source-map',
+    devtool: "cheap-eval-source-map",
     output: {
         library: 'libhdd',
         filename: 'libhdd.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'public/dist')
     }
 };
 
@@ -18,15 +18,20 @@ app = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'public/dist')
     },
-    devtool: 'source-map',
+    devtool: "cheap-eval-source-map",
     plugins: [
         new webpack.ProvidePlugin({ m: "mithril" }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor' // Specify the common bundle's name.
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        compress: true,
+        port: 9000
+    }
 };
 
-module.exports = [libhdd, app];
+module.exports = [app, libhdd];

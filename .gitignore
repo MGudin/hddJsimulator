@@ -1,7 +1,7 @@
 # -*- mode: gitignore; -*-
 ### Project Specific
 
-/dist
+public/dist
 ### Emacs ###
 *~
 \#*\#

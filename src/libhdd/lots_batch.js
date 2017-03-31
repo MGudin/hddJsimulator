@@ -42,7 +42,6 @@ class LotsBatch
         }
     }
 
-
     static fromJson(json)
     {
         return new LotsBatch(
