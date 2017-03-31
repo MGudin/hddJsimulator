@@ -1,13 +1,11 @@
-var Lot = require('../simulation').Lot;
+import { Lot } from '../libhdd';
 
-var lot  = {
-  unparsed: '',
-  setUnparsed: (string) => {
-    lot.unparsed = string
-  },
-  parse: () => Lot.fromString(lot.unparsed)
+let lot  = {
+    unparsed: '',
+    setUnparsed: string => {
+        lot.unparsed = string
+    },
+    parse: () => Lot.fromString(lot.unparsed)
 };
 
-module.exports={
-  lot,
-}
+export default lot;

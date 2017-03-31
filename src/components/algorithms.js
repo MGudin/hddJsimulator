@@ -1,46 +1,43 @@
-var m = require('mithril');
+import algorithm from '../models/algorithm';
 
-var algorithm = require('../models/algorithm').algorithm;
+let radioInputWidget = {
 
-var radioInputWidget = {
+    view: (vnode) => {
 
-  
-  view: (vnode) => {
-
-    return m('.radio-inline',
-             m('label',[
-               m('input',
-                 { type: "radio",
-                   name: "algorithm",
-                   value: vnode.attrs.value,
-                   onclick: m.withAttr('value', algorithm.setAlgorithm),
-                 }),// closes input
-               vnode.attrs.label
-             ]),
-            ) // closes .radio
-  }
+        return m('.radio-inline', [
+            m('label', [
+                m('input',
+                    { type: "radio",
+                        name: "algorithm",
+                        value: vnode.attrs.value,
+                        onclick: m.withAttr('value', algorithm.setAlgorithm)
+                    }),// closes input
+                vnode.attrs.label
+            ])
+        ]
+        ) // closes .radio
+    }
 }
 
-var algorithmsForm = {
-  
-  view: (vnode) => {
-    return [
-      m('.form-group',[
-        m('h3', 'Algoritmo'),
-        m('div',[
-          m(radioInputWidget, {value: "FCFS", label: "FCFS"}),
-          m(radioInputWidget, {value: "SSTF", label: "SSTF"}),
-          m(radioInputWidget, {value: "SCAN", label: "SCAN"}),
-          m(radioInputWidget, {value: "CSCAN", label: "CSCAN"}),
-          m(radioInputWidget, {value: "LOOK", label: "LOOK"}),
-          m(radioInputWidget, {value: "CLOOK", label: "CLOOK"})
-        ])
-      ])
-    ]
-  }
+let algorithmsForm = {
+    view: (vnode) => {
+        return [
+            m('.form-group', [
+                m('h3', 'Algoritmo'),
+                m('div', [
+                    m(radioInputWidget, {value: "FCFS", label: "FCFS"}),
+                    m(radioInputWidget, {value: "SSTF", label: "SSTF"}),
+                    m(radioInputWidget, {value: "SCAN", label: "SCAN"}),
+                    m(radioInputWidget, {value: "CSCAN", label: "CSCAN"}),
+                    m(radioInputWidget, {value: "LOOK", label: "LOOK"}),
+                    m(radioInputWidget, {value: "CLOOK", label: "CLOOK"})
+                ])
+            ])
+        ]
+    }
 }
 
-module.exports = {
-  algorithmsForm,
-  algorithm,
+export {
+    algorithmsForm,
+    algorithm,
 }

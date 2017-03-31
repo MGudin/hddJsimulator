@@ -1,10 +1,9 @@
-var batch = {
-  lots: [],
-  addLotInput: (vnode) => {
-    batch.lots.push(vnode)
-  }
+
+let batch = {
+    lots: [],
+    addLotInput: vnode => {
+        batch.lots.push(vnode)
+    }
 }
 
-module.exports = {
-  batch,
-}
+export default batch;

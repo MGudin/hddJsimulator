@@ -1,10 +1,8 @@
-var algorithm = {
+let algorithm = {
   algorithm: "FCFS",
   setAlgorithm: (value) => {
     algorithm.algorithm = String(value);
   }
 }
 
-module.exports = {
-  algorithm,
-}
+export default algorithm;
