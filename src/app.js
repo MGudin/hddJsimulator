@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     m.route(root, "/",
         {
             "/": libhdd.layouts.Home,
-            "/load_simulation": libhdd.layouts.SimulationForm
+          "/load_simulation": libhdd.layouts.SimulationForm,
+          "/simulacion": libhdd.layouts.Chart,
         }
     );
 });

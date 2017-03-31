@@ -3,7 +3,7 @@ const m = require('mithril')
 var batchForm = require('./components/batch').batchForm;
 var lotInputForm = require('./components/lot').lotInputForm;
 var hddForm = require('./components/hdd').hddForm;
-var algorithmsForm = require('./components/algorithms').algorithmsForm;
+var algorithmButtons = require('./components/algorithms').algorithmButtons;
 var simulationForm = require('./components/simulation').simulationForm;
 
 // lib
@@ -19,6 +19,8 @@ var hdd = require('./models/hdd').hdd;
 var algorithm = require('./models/algorithm').algorithm;
 var simulation = require('./models/simulation').simulation;
 var lot = require('./models/lot').lot;
+
+var scheduler;
 
 var Home = {
   view: () => {
@@ -60,7 +62,8 @@ var SimulationForm = {
                   lotsBatch: b
                 });
                 var a = eval("algorithms."+algorithm.algorithm);
-                var scheduler = new Scheduler(a,s);
+                var s = new Scheduler(a,s);
+                var scheduler = s;
                 console.log(scheduler.run());
               }
             }, 'simular')
@@ -75,7 +78,13 @@ var SimulationForm = {
   }
 }
 
+var Chart = {
+  view: () => {
+    return m('', m(algorithmButtons))
+  }
+}
 module.exports = {
   SimulationForm,
   Home,
+  Chart,
 }
