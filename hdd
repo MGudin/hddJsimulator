@@ -9,4 +9,7 @@
 new_session -n 'General'
 
 # Send some command down to our new window called 'General'
-send_line 'General' '${EDITOR:-vi}' 
+send_line 'General' '${EDITOR:-vi}'
+
+new_window 'server'
+send_line 'server' 'npm run serve'
