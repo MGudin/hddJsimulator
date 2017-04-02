@@ -2,14 +2,13 @@
 # vi: set ft=sh :
 
 #= AUTHOR: farfanoide (https://github.com/farfanoide)
-#= DESCRIPTION: Basic tmux session
+#= DESCRIPTION: Dev session for hddJsimulator
 
-# Create a new session and name the first window 'General'
-# This is required as it actually creates the new session
-new_session -n 'General'
+new_session -n 'Editor'
+send_line 'Editor' '${EDITOR:-vi}'
 
-# Send some command down to our new window called 'General'
-send_line 'General' '${EDITOR:-vi}'
-
-new_window 'server'
+new_window -n 'server'
 send_line 'server' 'npm run serve'
+vsplit 'server'
+send_line 'server' 'npm run watch'
+select_window 'Editor'
