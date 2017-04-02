@@ -1,18 +1,20 @@
-import {
-    algorithmsForm,
-    radioInputWidget,
-} from './algorithms';
+import algorithmButtons from './algorithms';
 
 import hddForm from './hdd';
 
 import simulationForm from  './simulation';
 
+import simulationInfo from  './simulation_info';
+
 import batchForm from './batch';
 
+
 export {
-    algorithmsForm,
-    batchForm,
-    hddForm,
-    radioInputWidget,
-    simulationForm,
+  algorithmsForm,
+  batchForm,
+  hddForm,
+  radioInputWidget,
+  simulationForm,
+	simulationInfo,
+  algorithmButtons
 }

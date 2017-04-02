@@ -1,7 +1,7 @@
 'use strict';
 // TODO: check if we need m as a global: https://webpack.github.io/docs/shimming-modules.html#expose-loader
 
-import {SimulationForm, Home} from './layouts';
+import {SimulationForm, Home, Chart} from './layouts';
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     m.route(root, "/",
         {
-            "/": Home,
-            "/load_simulation": SimulationForm
+          "/": Home,
+          "/load_simulation": SimulationForm,
+          "/simulacion": Chart,
         }
     );
 });
