@@ -1,17 +1,20 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const FCFS        = require(`${root_dir}src/algorithms.js`).FCFS;
-const PageFault   = require(`${root_dir}src/simulation.js`).PageFault;
-const Requirement = require(`${root_dir}src/simulation.js`).Requirement;
-const Lot         = require(`${root_dir}src/simulation.js`).Lot;
-const Simulation  = require(`${root_dir}src/simulation.js`).Simulation;
-const LotsBatch   = require(`${root_dir}src/simulation.js`).LotsBatch;
-const Hdd         = require(`${root_dir}src/simulation.js`).Hdd;
-const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const examples    = require('./examples.js');
+import test from 'tape';
+import {
+    Lot,
+    LotsBatch,
+    Hdd,
+    PageFault,
+    Requirement,
+    Scheduler,
+    Simulation,
+    algorithms
+} from '../src/libhdd';
+import examples from './examples';
+const FCFS = algorithms.FCFS;
 
+// TODO: reformat as all other algorithm tests
 
 function SimpleScheduler() {
   return new Scheduler(FCFS, new Simulation());

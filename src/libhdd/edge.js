@@ -1,6 +1,6 @@
 'use strict';
 
-const Requirement = require('./requirement');
+import Requirement from './requirement';
 
 class Edge extends Requirement
 {
@@ -10,4 +10,4 @@ class Edge extends Requirement
     }
 }
 
-module.exports = Edge;
+export default Edge;

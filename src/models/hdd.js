@@ -1,9 +1,9 @@
-var Hdd = require('../hdd');
+import {Hdd} from '../libhdd';
 
-var hdd = {
+let hdd = {
   name: "",
   tracks:512,
-  setTracks: (value) => {
+  setTracks: value => {
     hdd.tracks = Number(value);
   },
   setName: (value) => {
@@ -16,6 +16,4 @@ var hdd = {
   }
 };
 
-module.exports={
-  hdd,
-}
+export default hdd;

@@ -1,7 +1,6 @@
-var Scheduler = require('../scheduler').Scheduler;
-var algorithm = require('./algorithm').algorithm;
-var simulation = require('./simulation').simulation;
-var algorithms = require('../algorithms');
+import {Scheduler, algorithms} from '../libhdd';
+import algorithm from './algorithm';
+import simulation from './simulation';
 
 var scheduler = {
   FCFS: algorithms.FCFS,
@@ -16,4 +15,4 @@ var scheduler = {
   }
 }
 
-module.exports = scheduler
+export default scheduler;

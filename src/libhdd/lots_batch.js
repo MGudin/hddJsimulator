@@ -1,6 +1,6 @@
 'use strict';
 
-const Lot = require('./lot');
+import Lot from './lot';
 
 class LotsBatch
 {
@@ -42,7 +42,6 @@ class LotsBatch
         }
     }
 
-
     static fromJson(json)
     {
         return new LotsBatch(
@@ -51,4 +50,4 @@ class LotsBatch
     }
 }
 
-module.exports = LotsBatch;
+export default LotsBatch;

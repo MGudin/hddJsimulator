@@ -1,10 +1,7 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const sim_lib     = require(`${root_dir}src/simulation.js`);
-const Requirement = sim_lib.Requirement;
-const PageFault   = sim_lib.PageFault;
+import test from 'tape';
+import {Requirement, PageFault} from '../src/libhdd';
 
 
 test('Requirement equals other Requirement with same value', assert => {

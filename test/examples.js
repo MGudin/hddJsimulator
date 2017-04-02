@@ -1,9 +1,12 @@
 'use strict';
 
-const root_dir  = '../';
-const lib_sim   = require('./../src/simulation');
-const Lot       = lib_sim.Lot;
-const LotsBatch = lib_sim.LotsBatch;
+import {
+    Hdd,
+    LotsBatch,
+    Scheduler,
+    Simulation,
+    Lot,
+} from '../src/libhdd';
 
 var batches = {
   with_pfs: function () {
@@ -29,13 +32,13 @@ var batches = {
 
 // TP6-N6-iso.pdf
 // ex 12
-var hdd12 = new lib_sim.Hdd({
+var hdd12 = new Hdd({
   name:   'Excercise 12 HDD',
   tracks: 199
 })
 
 var simulation12 = function() {
-  return new lib_sim.Simulation({
+  return new Simulation({
     name : 'Excercise 12 simulation',
     direction: true,
     position: 83,
@@ -46,14 +49,14 @@ var simulation12 = function() {
 
 // ex 14
 
-var hdd14 = new lib_sim.Hdd({
+var hdd14 = new Hdd({
   name:   'Excercise 14 HDD',
   tracks: 299
 })
 
 var simulation14 = function() {
 
-  return new lib_sim.Simulation({
+  return new Simulation({
     name : 'Excercise 14 simulation',
     direction: true,
     position: 143,
@@ -63,7 +66,7 @@ var simulation14 = function() {
 }
 
 // ex 15
-var hdd15 = new lib_sim.Hdd({
+var hdd15 = new Hdd({
   name:   'Excercise 15 HDD',
   tracks: 299
 })
@@ -71,7 +74,7 @@ var hdd15 = new lib_sim.Hdd({
 
 var simulation15 = function() {
 
-  return new lib_sim.Simulation({
+  return new Simulation({
     name : 'Excercise 15 simulation',
     direction: true,
     position: 140,

@@ -1,14 +1,18 @@
 'use strict';
 
-const root_dir    = '../'
-const test        = require('tape');
-const SSTF        = require(`${root_dir}src/algorithms.js`).SSTF;
-const lib_sim     = require(`${root_dir}src/simulation.js`);
-const PageFault   = lib_sim.PageFault;
-const Requirement = lib_sim.Requirement;
-const Lot         = lib_sim.Lot;
-const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const examples    = require('./examples');
+import test from 'tape';
+import {
+    Lot,
+    LotsBatch,
+    PageFault,
+    Requirement,
+    Scheduler,
+    Simulation,
+    algorithms
+} from '../src/libhdd';
+import examples from './examples';
+
+const SSTF = algorithms.SSTF;
 
 function Context() {
   return {

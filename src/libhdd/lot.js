@@ -1,6 +1,6 @@
 'use strict';
 
-const Requirement = require('./requirement');
+import Requirement from './requirement';
 
 class Lot
 {
@@ -89,9 +89,9 @@ class Lot
 
     static fromJson(json)
     {
-        return new Lot(json.map(req_str => Requirement.fromString(req_str)));
+        return new Lot(json.map(Requirement.fromString));
     }
 
 }
 
-module.exports = Lot;
+export default Lot;

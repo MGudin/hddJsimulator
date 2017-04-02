@@ -1,5 +1,3 @@
-var m = require('mithril');
-
 var simulationInfo = {
     view: (vnode) => {
         return [
@@ -35,4 +33,4 @@ var simulationInfo = {
     }
 }
 
-module.exports = simulationInfo
+export default simulationInfo;

@@ -1,29 +1,21 @@
-const m = require('mithril')
+import {
+    algorithmButtons,
+    hddForm,
+    simulationForm,
+    batchForm,
+lotInputForm,
+simulationInfo,
+} from './components';
 
-var batchForm = require('./components/batch').batchForm;
-var lotInputForm = require('./components/lot').lotInputForm;
-var hddForm = require('./components/hdd').hddForm;
-var algorithmButtons = require('./components/algorithms').algorithmButtons;
-var simulationForm = require('./components/simulation').simulationForm;
-
-var simulationInfo = require('./components/simulation_info');
-// lib
-// var algorithms = require('./algorithms');
-// var Scheduler = require('./scheduler');
-
-// models
-// var simulation = require('./models/simulation').simulation;
-// var scheduler = require('./models/scheduler');
-// var scheduler;
+console.log(algorithmButtons);
 
 var Home = {
-  view: () => {
-    return m('div', [
-      m('a', {href: '#!/load_simulation'}, 'cargar simulacion')
-    ]);
-  }
+    view: () => {
+        return m('div', [
+            m('a', {href: '#!/load_simulation'}, 'cargar simulacion')
+        ]);
+    }
 };
-
 
 var SimulationForm = {
   view: (ctrl) => {
@@ -74,7 +66,8 @@ var Chart = {
     ]      
   }
 }
-module.exports = {
+
+export {
   SimulationForm,
   Home,
   Chart,

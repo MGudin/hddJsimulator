@@ -1,9 +1,7 @@
 'use strict';
 
-const root_dir = '../';
-
-const Lot = require('./simulation').Lot;
-const Requirement = require('./simulation').Requirement;
+import Lot from './lot';
+import Requirement from './requirement';
 
 class Scheduler
 {
@@ -97,6 +95,4 @@ class Scheduler
     }
 }
 
-module.exports = {
-    Scheduler
-}
+export default Scheduler;

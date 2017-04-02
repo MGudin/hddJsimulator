@@ -1,8 +1,8 @@
-var m = require('mithril');
+import algorithm from '../models/algorithm';
+import scheduler from '../models/scheduler';
 
-var algorithm = require('../models/algorithm').algorithm;
-var scheduler = require('../models/scheduler');
 var s;
+
 var buttonWidget = {
   view: (vnode) => {
     return m('button.btn.btn-default',
@@ -40,6 +40,4 @@ var algorithmButtons = {
   }
 }
 
-module.exports = {
-  algorithmButtons,
-}
+export default algorithmButtons;

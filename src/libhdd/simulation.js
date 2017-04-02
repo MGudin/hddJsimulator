@@ -1,15 +1,10 @@
 'use strict';
 
-const Requirement = require('./requirement');
-const Edge = require('./edge');
-const PageFault = require('./page_fault');
-const Lot = require('./lot');
-const LotsBatch = require('./lots_batch');
-const Hdd = require('./hdd');
+import Hdd from './hdd';
+import LotsBatch from './lots_batch';
 
 class Simulation
 {
-
     constructor(params)
     {
         // Set default simulation values
@@ -24,15 +19,6 @@ class Simulation
         // Updates default values with params
         Object.assign(this, params);
     }
-
 }
 
-module.exports = {
-    Simulation,
-    LotsBatch,
-    Hdd,
-    Lot,
-    Requirement,
-    PageFault,
-    Edge
-}
+export default Simulation;

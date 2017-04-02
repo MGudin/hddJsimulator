@@ -1,17 +1,17 @@
 'use strict';
-const root_dir = '../'
-const test     = require('tape');
-require('babel-polyfill');
 
-const FCFS        = require(`${root_dir}src/algorithms.js`).FCFS;
-const Scheduler   = require(`${root_dir}src/scheduler.js`).Scheduler;
-const lib_sim     = require(`${root_dir}src/simulation.js`);
-const Simulation  = lib_sim.Simulation;
-const LotsBatch   = lib_sim.LotsBatch;
-const Requirement = lib_sim.Requirement;
-const PageFault   = lib_sim.PageFault;
-const Lot         = lib_sim.Lot;
+import test from 'tape';
+import {
+    Lot,
+    LotsBatch,
+    PageFault,
+    Requirement,
+    Scheduler,
+    Simulation,
+    algorithms
+} from '../src/libhdd';
 
+const FCFS = algorithms.FCFS;
 
 function SimpleScheduler() {
   return new Scheduler(FCFS, new Simulation());

@@ -1,15 +1,13 @@
-var Batch = require('../lots_batch');
+import {LotsBatch as Batch} from '../libhdd';
 
-var batch = {
+let batch = {
   lots: [],
-  addLotInput: (vnode) => {
+  addLotInput: vnode => {
     batch.lots.push(vnode)
   },
   construct: () => {
-   return new Batch(batch.lots)
+    return new Batch(batch.lots)
   }
 }
 
-module.exports = {
-  batch,
-}
+export default batch;

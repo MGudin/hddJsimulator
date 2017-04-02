@@ -1,17 +1,17 @@
-var Simulation = require('../simulation').Simulation;
-var hdd = require('./hdd').hdd;
-var batch = require('./batch').batch;
-var lot = require('./lot').lot;
+import {Simulation} from '../libhdd';
+import hdd from './hdd';
+import batch from './batch';
+import lot from './lot';
 
-var simulation = {
-  position: 0,
-  direction: true,
-  toggleDirection: () => {
-    simulation.direction = !simulation.direction
-  },
-  setPosition: (position) => {
-    simulation.position = Number(position)
-  },
+let simulation = {
+    position: 0,
+    direction: true,
+    toggleDirection: () => {
+        simulation.direction = !simulation.direction
+    },
+    setPosition: position => {
+        simulation.position = Number(position)
+    },
   construct: () => {
     batch.lots = [{lot: lot.parse(), movementsUntilNextLot: 0}];
     return  new Simulation({
@@ -23,6 +23,4 @@ var simulation = {
   }
 }
 
-module.exports = {
-  simulation,
-}
+export default simulation;

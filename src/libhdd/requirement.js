@@ -49,4 +49,4 @@ class Requirement
     }
 }
 
-module.exports = Requirement;
+export default Requirement;

@@ -1,9 +1,7 @@
 'use strict';
 
-const root_dir   = '../'
-const test       = require('tape');
-const sim_lib    = require(`${root_dir}src/simulation.js`);
-const Simulation = sim_lib.Simulation;
+import test from 'tape';
+import { Simulation } from '../src/libhdd';
 
 test('Simulation has default values when initialized without params', assert => {
 

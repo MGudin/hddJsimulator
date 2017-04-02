@@ -1,19 +1,19 @@
 'use strict';
+// TODO: check if we need m as a global: https://webpack.github.io/docs/shimming-modules.html#expose-loader
 
-var m, simulation, lot_thingy;
+import {SimulationForm, Home, Chart} from './layouts';
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    m = libhdd.m;
     let root = document.querySelector('#app-root')
 
-    simulation = new libhdd.Simulation();
+    let simulation = new libhdd.Simulation();
 
     m.route(root, "/",
         {
-            "/": libhdd.layouts.Home,
-          "/load_simulation": libhdd.layouts.SimulationForm,
-          "/simulacion": libhdd.layouts.Chart,
+          "/": Home,
+          "/load_simulation": SimulationForm,
+          "/simulacion": Chart,
         }
     );
 });
