@@ -19,6 +19,28 @@ class Simulation
         // Updates default values with params
         Object.assign(this, params);
     }
+
+    toJson()
+    {
+        return {
+            name: this.name,
+            direction: this.direction,
+            position: this.position,
+            hdd: this.hdd.toJson(),
+            lotsBatch:  this.lotsBatch.toJson()
+        };
+    }
+
+    static fromJson(json)
+    {
+        return new Simulation({
+            name: json.name,
+            direction: json.direction,
+            position: json.position,
+            hdd: Hdd.fromJson(json.hdd),
+            lotsBatch: LotsBatch.fromJson(json.lotsBatch)
+        });
+    }
 }
 
 export default Simulation;
