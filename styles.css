@@ -300,3 +300,22 @@ body {
     color: gray;
     box-shadow: 0 0 .3em rgba(0, 0, 0, 0.3);
 }
+
+/* .panel { */
+/*     color: #8c8c8c; */
+/*     border: 1px solid #423939; */
+    /* background-color: rgba(0,0,0,0.1); */
+    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.075), inset 0 0 1.7em rgba(0,0,0,.5 */
+/* } */
+.info-panel {
+    background-color: rgba(0,0,0,0.1);
+    border: 1px solid #423939;
+}
+.panel-default > .panel-heading {
+    background-image: none;
+    background-color: rgba(0,0,0,0.1);
+    color: white;
+}
+/* .info-panel > .panel-heading { */
+/*     background-color: rgba(0,0,0,0.1); */
+/* } */

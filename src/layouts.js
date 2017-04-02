@@ -6,6 +6,7 @@ var hddForm = require('./components/hdd').hddForm;
 var algorithmButtons = require('./components/algorithms').algorithmButtons;
 var simulationForm = require('./components/simulation').simulationForm;
 
+var simulationInfo = require('./components/simulation_info');
 // lib
 // var algorithms = require('./algorithms');
 // var Scheduler = require('./scheduler');
@@ -28,7 +29,6 @@ var SimulationForm = {
   view: (ctrl) => {
     return m('div', [
       m('',[
-
         m('.row',[
           m('.col-md-6', [
             m(hddForm)
@@ -64,7 +64,14 @@ var SimulationForm = {
 
 var Chart = {
   view: () => {
-    return m('', m(algorithmButtons))
+    return [
+      m('.row',[
+        m(simulationInfo)
+      ]), // closes first row
+      m('.row',[
+        m(algorithmButtons)
+      ])
+    ]      
   }
 }
 module.exports = {
