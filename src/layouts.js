@@ -3,11 +3,9 @@ import {
     hddForm,
     simulationForm,
     batchForm,
-lotInputForm,
-simulationInfo,
+  lotInputForm,
+  simulationInfo,
 } from './components';
-
-console.log(algorithmButtons);
 
 var Home = {
     view: () => {

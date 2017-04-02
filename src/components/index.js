@@ -1,4 +1,4 @@
-import algorithmsButton from './algorithms';
+import algorithmButtons from './algorithms';
 
 import hddForm from './hdd';
 
