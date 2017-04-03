@@ -3,7 +3,7 @@
 
 import {SimulationForm, Home, Chart} from './layouts';
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
     let root = document.querySelector('#app-root')
 
