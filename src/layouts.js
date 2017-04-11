@@ -4,7 +4,8 @@ import {
     simulationForm,
     batchForm,
   lotInputForm,
-  simulationInfo,
+    simulationInfo,
+    chartComponent,
 } from './components';
 
 var Home = {
@@ -44,7 +45,7 @@ var SimulationForm = {
           ]),
         ]) // close row 2
       ]),// closes form
-      
+
       m('.actions', [
         m('a', {href: '#!/'}, 'back')
       ])
@@ -53,16 +54,19 @@ var SimulationForm = {
 }
 
 var Chart = {
-  view: () => {
-    return [
-      m('.row',[
-        m(simulationInfo)
-      ]), // closes first row
-      m('.row',[
-        m(algorithmButtons)
-      ])
-    ]      
-  }
+    view: () => {
+        return [
+            m('.row',[
+                m(simulationInfo)
+            ]), // closes first row
+            m('.row',[
+                m(algorithmButtons)
+            ]),
+            m('.row',[
+                m(chartComponent)
+            ])
+        ]
+    }
 }
 
 export {

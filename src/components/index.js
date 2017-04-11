@@ -8,6 +8,7 @@ import simulationInfo from  './simulation_info';
 
 import batchForm from './batch';
 
+import chartComponent from './chart'
 
 export {
   algorithmsForm,
@@ -16,5 +17,6 @@ export {
   radioInputWidget,
   simulationForm,
 	simulationInfo,
-  algorithmButtons
+    algorithmButtons,
+    chartComponent
 }
