@@ -1,33 +1,34 @@
 var Chart = require('chart.js');
 
-var chartModel = {
+import {scheduler} from '../../models';
 
-    data: [
-        {
-            x: -10,
-            y: 10
-        }, {
-            x: 20,
-            y: 5
-        }, {
-            x: 0,
-            y: 0
-        }],
+var chartModel = {
+    index: -1,
+
+    data:[],
 
     addPoint:(coor) => {
         chartModel.data.push(coor);
     },
 
+    stepsToData:(steps) => {
+        chartModel.data = [];
+        steps.forEach((step, index) => {
+            console.log(index);
+            chartModel.addPoint({x: step.requirement.value, y: - index*2});
+        });
+    },
     construct: (vnode) => {
         return new Chart(vnode.instance.dom,
                          {
                              type: 'line',
                              data: {
                                  datasets:[
-                                     {
-                                         data: chartModel.data
-
-                                     }]
+                                     {data: chartModel.data,
+                                      lineTension:0,
+                                      fill: false
+                                     }
+                                 ]
                              },
 
                              options: {
@@ -41,7 +42,7 @@ var chartModel = {
                                          type: 'linear',
                                          position: 'bottom'
                                      }]
-                                 }
+                                 },
                              }
                          });
 
@@ -50,20 +51,15 @@ var chartModel = {
 }
 
 var chartComponent = {
-    oncreate: (vnode) => {
-        var c = chartModel.construct(vnode);
+    oninit: (vnode) => {
+        console.log(vnode.attrs.results);
+    },
+    onupdate: (vnode) => {
+        chartModel.stepsToData(vnode.attrs.results);
+        chartModel.construct(vnode);
     },
     view: (vnode) => {
-        return [m('canvas[width=400][height=400]'),
-                m('a.btn.btn-default',{
-                    onclick: (e) => {
-                        e.preventDefault();
-                        chartModel.addPoint({x:-5, y:-10});
-                        console.log(chartModel.data);
-                        chartModel.construct(vnode);
-                    }
-                }, "agregar punto")
-               ]
+        return m('canvas[width=400][height=400]');
     }
 }
 

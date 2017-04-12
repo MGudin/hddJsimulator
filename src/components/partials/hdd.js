@@ -1,4 +1,4 @@
-import hdd from '../models/hdd';
+import {hdd} from '../../models';
 
 let hddForm = {
     view : (vnode) => {
@@ -21,7 +21,7 @@ let hddForm = {
                     { id: "hdd-tracks",
                         type: "number",
                         value: hdd.tracks,
-                        oninput: m.withAttr("value", hdd.setTracks)}
+                      oninput: m.withAttr("value", hdd.setTracks)}
                 )
             ])
         ]

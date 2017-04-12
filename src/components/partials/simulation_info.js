@@ -7,9 +7,9 @@ var simulationInfo = {
                       m('h5.panel-title',"simulacion")
                      ),
                     m('.panel-body',[
-                        m('p', "Hdd: 521 tracks"),
-                        m('p', "Direccion Inicial: derecha"),
-                        m('p', "Posicion inicial: 40"),
+                        m('p', "Hdd:"+vnode.attrs.simulation.hdd.tracks),
+                        m('p', "Direccion Inicial:"+((vnode.attrs.simulation.direction)?"derecha":"izquierda")),
+                        m('p', "Posicion inicial:"+vnode.attrs.simulation.position),
                     ])
                 ])// closes panel
             ]), // first col

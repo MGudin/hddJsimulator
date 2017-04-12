@@ -1,4 +1,4 @@
-import lot from '../models/lot';
+import {lot} from '../../models';
 
 let lotInputForm = {
     view: () => {

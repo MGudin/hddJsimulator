@@ -3,7 +3,7 @@ import hdd from './hdd';
 import batch from './batch';
 import lot from './lot';
 
-let simulation = {
+var simulation = {
     position: 0,
     direction: true,
     toggleDirection: () => {

@@ -1,6 +1,6 @@
 import {Hdd} from '../libhdd';
 
-let hdd = {
+var hdd = {
   name: "",
   tracks:512,
   setTracks: value => {
