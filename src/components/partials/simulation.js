@@ -1,10 +1,16 @@
 import {simulation} from '../../models';
 
-let simulationForm = {
-    oninit: vnode => {
-        vnode.attrs.right = "checked";
-    },
 
+let simulationForm = {
+    oninit: (vnode) => {
+        this.right = "checked";
+        this.left = "";
+    },
+    radioImputClick: (value) => {
+        simulation.toggleDirection(value);
+        this.right = !this.right;
+        this.left = !this.left;
+    },
     view: vnode => {
         return m('.form-group', [
             m('h3', 'Estado inicial'),
@@ -18,7 +24,9 @@ let simulationForm = {
                         { type: "radio",
                             name: "direction",
                             value: "false",
-                            onclick:  m.withAttr('value', simulation.toggleDirection)}
+                          onclick: m.withAttr('value', simulationForm.radioImputClick),
+                          checked: this.left
+                        }
                     ),// closes input
                     m('span.glyphicon.glyphicon-circle-arrow-left')
                 ])
@@ -27,9 +35,11 @@ let simulationForm = {
                 m('label', [
                     m('input',
                         { type: "radio",
-                            name: "direction",
-                            value: "false",
-                            onclick:  m.withAttr('value', simulation.toggleDirection)}
+                          name: "direction",
+                          value: "true",
+                          onclick:  m.withAttr('value', simulationForm.radioImputClick),
+                          checked: this.right
+                        }
                     ),// closes input
                     m('span.glyphicon.glyphicon-circle-arrow-right')
                 ])
