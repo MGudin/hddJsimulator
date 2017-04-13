@@ -1,62 +1,13 @@
-var Chart = require('chart.js');
+import {scheduler, chartModel} from '../../models';
 
-import {scheduler} from '../../models';
-
-var chartModel = {
-    index: -1,
-
-    data:[],
-
-    addPoint:(coor) => {
-        chartModel.data.push(coor);
-    },
-
-    stepsToData:(steps) => {
-        chartModel.data = [];
-        steps.forEach((step, index) => {
-            console.log(index);
-            chartModel.addPoint({x: step.requirement.value, y: - index*2});
-        });
-    },
-    construct: (vnode) => {
-        return new Chart(vnode.instance.dom,
-                         {
-                             type: 'line',
-                             data: {
-                                 datasets:[
-                                     {data: chartModel.data,
-                                      lineTension:0,
-                                      fill: false
-                                     }
-                                 ]
-                             },
-
-                             options: {
-                                 scales: {
-                                     xAxes: [{
-                                         ticks: {
-                                             max: 511,
-                                             min: 0,
-                                             step: 10
-                                         },
-                                         type: 'linear',
-                                         position: 'bottom'
-                                     }]
-                                 },
-                             }
-                         });
-
-
-    }
-}
 
 var chartComponent = {
-    oninit: (vnode) => {
-        console.log(vnode.attrs.results);
+    oncreate:(vnode) => {
+        this.canvas = vnode.instance.dom;
     },
     onupdate: (vnode) => {
         chartModel.stepsToData(vnode.attrs.results);
-        chartModel.construct(vnode);
+        chartModel.construct(this.canvas);
     },
     view: (vnode) => {
         return m('canvas[width=400][height=400]');
