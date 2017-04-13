@@ -1,4 +1,7 @@
 var simulationInfo = {
+    oninit: (vnode) => {
+        this.simulation = vnode.attrs.simulation
+    },
     view: (vnode) => {
         return [
             m(".col-md-4",[
@@ -7,9 +10,9 @@ var simulationInfo = {
                       m('h5.panel-title',"simulacion")
                      ),
                     m('.panel-body',[
-                        m('p', "Hdd:"+vnode.attrs.simulation.hdd.tracks),
-                        m('p', "Direccion Inicial:"+((vnode.attrs.simulation.direction)?"derecha":"izquierda")),
-                        m('p', "Posicion inicial:"+vnode.attrs.simulation.position),
+                        m('p', "Hdd:"+this.simulation.hdd.tracks),
+                        m('p', "Direccion Inicial:"+((this.simulation.direction)?"derecha":"izquierda")),
+                        m('p', "Posicion inicial:"+this.simulation.position),
                     ])
                 ])// closes panel
             ]), // first col
