@@ -29,7 +29,9 @@ var Chart = {
                 m(algorithmButtons)
             ]),
             m('.row',[
-                m(chartComponent, {results: scheduler.construct().run()})
+                m('.chart-wrapper', [
+                    m(chartComponent, {results: scheduler.construct().run()})
+                ])
             ])
         ]
     }
