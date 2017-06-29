@@ -16,6 +16,7 @@ var chartModel = {
             chartModel.addPoint({x: step.requirement.value, y: - index*2});
         });
     },
+
     construct: (vnode) => {
         return new Chart(vnode,
                          {
@@ -28,7 +29,10 @@ var chartModel = {
                                      }
                                  ]
                              },
-
+                             legend: {
+                                 enabled: false,
+                                 align: "left"
+                             },
                              options: {
                                  scales: {
                                      xAxes: [{
@@ -40,6 +44,9 @@ var chartModel = {
                                          type: 'linear',
                                          position: 'bottom'
                                      }]
+                                 },
+                                 legend:{
+                                     display: false
                                  },
                              }
                          });
