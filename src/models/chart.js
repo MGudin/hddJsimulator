@@ -43,6 +43,13 @@ var chartModel = {
                                          },
                                          type: 'linear',
                                          position: 'bottom'
+                                     }],
+                                     yAxes: [{
+                                         ticks: {
+                                             callback: function(value, index, values){
+                                                 return '';
+                                             }
+                                         }
                                      }]
                                  },
                                  legend:{
