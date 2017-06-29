@@ -1,6 +1,7 @@
 var simulationInfo = {
     oninit: (vnode) => {
-        this.simulation = vnode.attrs.simulation
+        this.simulation = vnode.attrs.simulation;
+        this.chart = vnode.attrs.chart;
     },
     view: (vnode) => {
         return [

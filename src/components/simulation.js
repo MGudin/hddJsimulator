@@ -4,11 +4,16 @@ import {
     chartComponent,
 } from './partials';
 
-import {simulation, scheduler, algorithm} from '../models';
+import {simulation,
+        scheduler,
+        algorithm,
+        chartModel,
+       } from '../models';
 
 var Chart = {
     oninit: (vnode) => {
         this.simulation = simulation.construct();
+        this.chart = chartModel;
     },
     onupdate:(vnode) => {
 
@@ -16,7 +21,9 @@ var Chart = {
     view: (vnode) => {
         return [
             m('.row',[
-                m(simulationInfo, {simulation: this.simulation})
+                m(simulationInfo, {simulation: this.simulation,
+                                   chart: this.chart
+                                  })
             ]), // closes first row
             m('.row',[
                 m(algorithmButtons)
