@@ -13,7 +13,7 @@ var chartModel = {
         chartModel.data = [];
         steps.forEach((step, index) => {
             console.log(index);
-            chartModel.addPoint({x: step.requirement.value, y: - index*2});
+            chartModel.addPoint({x: step.requirement.value, y: - index});
         });
     },
 
@@ -54,6 +54,16 @@ var chartModel = {
                                  },
                                  legend:{
                                      display: false
+                                 },
+                                 tooltips: {
+                                     callbacks: {
+                                         title: function(tooltipItem, chart){
+                                             return "contexto";
+                                         },
+                                         label: function(tooltipItem, data){
+                                             return "requerimiento: " + tooltipItem.xLabel;
+                                         }
+                                     }
                                  },
                              }
                          });
