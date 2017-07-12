@@ -32,6 +32,12 @@ var Chart = {
                 m('.chart-wrapper', [
                     m(chartComponent, {results: scheduler.construct().run()})
                 ])
+            ]),
+
+            m('.row',[
+                m('.actions', [
+                    m('a', {href: '#!/load_simulation'}, 'back')
+                ])
             ])
         ]
     }
