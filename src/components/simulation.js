@@ -12,17 +12,14 @@ import {simulation,
 
 var Chart = {
     oninit: (vnode) => {
-        this.simulation = simulation.construct();
-        this.chart = chartModel;
     },
     onupdate:(vnode) => {
-
     },
     view: (vnode) => {
         return [
             m('.row',[
-                m(simulationInfo, {simulation: this.simulation,
-                                   chart: this.chart
+                m(simulationInfo, {simulation: simulation.construct(),
+                                   chart: chartModel
                                   })
             ]), // closes first row
             m('.row',[
@@ -30,7 +27,10 @@ var Chart = {
             ]),
             m('.row',[
                 m('.chart-wrapper', [
-                    m(chartComponent, {results: scheduler.construct().run()})
+                    m(chartComponent, {
+                        results: scheduler.construct().run(),
+                        initialPosition: simulation.position
+                    })
                 ])
             ]),
 
