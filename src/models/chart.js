@@ -1,19 +1,48 @@
 var Chart = require('chart.js');
 
 var chartModel = {
+    // TODO: set y coordinate according to lenght
+    // of data
+
     index: -1,
 
     data:[],
 
-    addPoint:(coor) => {
+    addPoint:(xCoor, yCoor, kwargs) => {
+        let coor = {
+            x: xCoor,
+            y: yCoor
+        };
+        Object.assign(coor, kwargs);
         chartModel.data.push(coor);
     },
 
-    stepsToData:(steps) => {
+    stepsToData:(initialPosition, steps) => {
         chartModel.data = [];
+
+        // add initial point to data
+        chartModel.addPoint(initialPosition,0,{movements:0});
+        //     {
+        //         x: initialPosition,
+        //         y: 0,
+        //         movements: 0
+        //     }
+        // );
+
         steps.forEach((step, index) => {
-            console.log(index);
-            chartModel.addPoint({x: step.requirement.value, y: - index});
+            chartModel.addPoint(
+                step.requirement.value,
+                    -index-1,
+                {movements:step.movements}
+            );
+            //     {
+            //         x: step.requirement.value,
+            //         // cannot use index as it comes because
+            //         // there's already at initial point
+            //         y: - index - 1,
+            //         movements: step.movements,
+            //     }
+            // );
         });
     },
 
@@ -23,9 +52,10 @@ var chartModel = {
                              type: 'line',
                              data: {
                                  datasets:[
-                                     {data: chartModel.data,
-                                      lineTension:0,
-                                      fill: false
+                                     {
+                                         data: chartModel.data,
+                                         lineTension:0,
+                                         fill: false
                                      }
                                  ]
                              },
@@ -56,12 +86,16 @@ var chartModel = {
                                      display: false
                                  },
                                  tooltips: {
+                                     displayColors: false,
                                      callbacks: {
                                          title: function(tooltipItem, chart){
                                              return "contexto";
                                          },
                                          label: function(tooltipItem, data){
-                                             return "requerimiento: " + tooltipItem.xLabel;
+                                             return [
+                                                 "requerimiento: " + tooltipItem.xLabel,
+                                                 "movimientos: " + data.datasets[0].data[tooltipItem.index].movements
+                                             ];
                                          }
                                      }
                                  },
