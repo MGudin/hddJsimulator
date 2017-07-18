@@ -4,9 +4,18 @@ var chartModel = {
     // TODO: set y coordinate according to lenght
     // of data
 
+    initialPositionColor: '#00F',
+
+    PFColor: '#F00',
+
+    regularColor: '#0F0',
+
+
     index: -1,
 
     data:[],
+
+    pointColors:[],
 
     addPoint:(xCoor, yCoor, kwargs) => {
         let coor = {
@@ -19,6 +28,7 @@ var chartModel = {
 
     stepsToData:(initialPosition, steps) => {
         chartModel.data = [];
+        chartModel.pointColors=[chartModel.initialPositionColor];
 
         // add initial point to data
         chartModel.addPoint(initialPosition,0,{movements:0, isPF:false});
@@ -33,6 +43,9 @@ var chartModel = {
                     isPF: step.requirement.isPageFault
                 }
             );
+            chartModel.pointColors.push(
+                (step.requirement.isPageFault)? chartModel.PFColor: chartModel.regularColor
+            );
         });
     },
 
@@ -45,7 +58,8 @@ var chartModel = {
                                      {
                                          data: chartModel.data,
                                          lineTension:0,
-                                         fill: false
+                                         fill: false,
+                                         pointBackgroundColor: chartModel.pointColors
                                      }
                                  ]
                              },
