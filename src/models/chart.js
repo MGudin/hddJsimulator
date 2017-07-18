@@ -21,28 +21,18 @@ var chartModel = {
         chartModel.data = [];
 
         // add initial point to data
-        chartModel.addPoint(initialPosition,0,{movements:0});
-        //     {
-        //         x: initialPosition,
-        //         y: 0,
-        //         movements: 0
-        //     }
-        // );
+        chartModel.addPoint(initialPosition,0,{movements:0, isPF:false});
 
         steps.forEach((step, index) => {
+
             chartModel.addPoint(
                 step.requirement.value,
                     -index-1,
-                {movements:step.movements}
+                {
+                    movements:step.movements,
+                    isPF: step.requirement.isPageFault
+                }
             );
-            //     {
-            //         x: step.requirement.value,
-            //         // cannot use index as it comes because
-            //         // there's already at initial point
-            //         y: - index - 1,
-            //         movements: step.movements,
-            //     }
-            // );
         });
     },
 
@@ -94,7 +84,8 @@ var chartModel = {
                                          label: function(tooltipItem, data){
                                              return [
                                                  "requerimiento: " + tooltipItem.xLabel,
-                                                 "movimientos: " + data.datasets[0].data[tooltipItem.index].movements
+                                                 "movimientos: " + data.datasets[0].data[tooltipItem.index].movements,
+                                                 "Tipo: " + ((data.datasets[0].data[tooltipItem.index].isPF)? "Page Fault": "Regular")
                                              ];
                                          }
                                      }
