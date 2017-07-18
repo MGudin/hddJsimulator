@@ -4,7 +4,9 @@ import batch from './batch';
 import lot from './lot';
 
 var simulation = {
-    position: 0,
+    // for speed up, position is setted.
+    position: 315,
+    // position: 0,
     direction: true,
     toggleDirection: () => {
         simulation.direction = !simulation.direction
