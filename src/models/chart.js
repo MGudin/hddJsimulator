@@ -1,17 +1,15 @@
 var Chart = require('chart.js');
 
 var chartModel = {
-    // TODO: set y coordinate according to lenght
+    // TODO:
+    // - set y coordinate according to lenght
     // of data
-
+    // - add chart settings inside this models
     initialPositionColor: '#00F',
 
     PFColor: '#F00',
 
     regularColor: '#0F0',
-
-
-    index: -1,
 
     data:[],
 
@@ -26,10 +24,13 @@ var chartModel = {
         chartModel.data.push(coor);
     },
 
-    stepsToData:(initialPosition, steps) => {
+    reset: () => {
         chartModel.data = [];
         chartModel.pointColors=[chartModel.initialPositionColor];
+    },
 
+    stepsToData:(initialPosition, steps) => {
+        chartModel.reset();
         // add initial point to data
         chartModel.addPoint(initialPosition,0,{movements:0, isPF:false});
 
