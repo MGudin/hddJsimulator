@@ -1,49 +1,46 @@
-import simulation from '../models/simulation';
+import {
+    algorithmButtons,
+    simulationInfo,
+    chartComponent,
+} from './partials';
 
-let simulationForm = {
-    oninit: vnode => {
-        vnode.attrs.right = "checked";
+import {simulation,
+        scheduler,
+        algorithm,
+        chartModel,
+       } from '../models';
+
+var Chart = {
+    oninit: (vnode) => {
     },
+    onupdate:(vnode) => {
+    },
+    view: (vnode) => {
+        return [
+            m('.row',[
+                m(simulationInfo, {simulation: simulation.construct(),
+                                   chart: chartModel
+                                  })
+            ]), // closes first row
+            m('.row',[
+                m(algorithmButtons)
+            ]),
+            m('.row',[
+                m('.chart-wrapper', [
+                    m(chartComponent, {
+                        results: scheduler.construct().run(),
+                        initialPosition: simulation.position
+                    })
+                ])
+            ]),
 
-    view: vnode => {
-        return m('.form-group', [
-            m('h3', 'Estado inicial'),
-            m('label',
-                { for: ''},
-                "Direccion inicial"),
-            m("br"),
-            m('.radio-inline', [
-                m('label', [
-                    m('input',
-                        { type: "radio",
-                            name: "direction",
-                            value: "false",
-                            onclick:  m.withAttr('value', simulation.toggleDirection)}
-                    ),// closes input
-                    m('span.glyphicon.glyphicon-circle-arrow-left')
+            m('.row',[
+                m('.actions', [
+                    m('a', {href: '#!/load_simulation'}, 'back')
                 ])
-            ]), // closes .radio
-            m('.radio-inline', [
-                m('label', [
-                    m('input',
-                        { type: "radio",
-                            name: "direction",
-                            value: "false",
-                            onclick:  m.withAttr('value', simulation.toggleDirection)}
-                    ),// closes input
-                    m('span.glyphicon.glyphicon-circle-arrow-right')
-                ])
-            ]), // closes .radio
-            m('br'),
-            m('label', { for: 'position' }, 'Posicion'),
-            m('input.form-control', {
-                type: "number",
-                name: "position",
-                value: simulation.position,
-                oninput: m.withAttr('value', simulation.setPosition)
-            })
-        ])// closes form-group
+            ])
+        ]
     }
 }
 
-export default simulationForm;
+export default Chart

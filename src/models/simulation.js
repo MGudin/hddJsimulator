@@ -3,8 +3,10 @@ import hdd from './hdd';
 import batch from './batch';
 import lot from './lot';
 
-let simulation = {
-    position: 0,
+var simulation = {
+    // for speed up, position is setted.
+    position: 315,
+    // position: 0,
     direction: true,
     toggleDirection: () => {
         simulation.direction = !simulation.direction

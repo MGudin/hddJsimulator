@@ -1,7 +1,9 @@
 import { Lot } from '../libhdd';
 
 let lot  = {
-    unparsed: '',
+    // for testing pourposes unparsed is
+    // filled with testcase
+    unparsed: '100 *250 300 50 400 390',
     setUnparsed: string => {
         lot.unparsed = string
     },

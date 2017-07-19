@@ -1,20 +1,11 @@
-import algorithmButtons from './algorithms';
+import Home from './home';
 
-import hddForm from './hdd';
+import SimulationSetUp from './simulation_setup';
 
-import simulationForm from  './simulation';
-
-import simulationInfo from  './simulation_info';
-
-import batchForm from './batch';
-
+import Chart from './simulation';
 
 export {
-  algorithmsForm,
-  batchForm,
-  hddForm,
-  radioInputWidget,
-  simulationForm,
-	simulationInfo,
-  algorithmButtons
+    Home,
+    SimulationSetUp,
+    Chart
 }
